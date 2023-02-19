@@ -1,0 +1,83 @@
+.square_container {
+  width: 100%;
+  padding-top: 54.75%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.darker_square {
+  background-color: rgba($color: #5c5656, $alpha: 0.2);
+}
+
+.lighter_square {
+  background-color: rgba($color: #d9d9d9, $alpha: 0.2);
+}
+
+.grid_layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-gap: 0px;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.text_background_square_container {
+  width: 50%;
+  padding-top: 54.75%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.text_background_layout {
+  position: absolute;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  grid-gap: 0px;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.text_background_square {
+  background-color: rgba($color: #1e1e1e, $alpha: 0.84);
+}
+
+.text_container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-right: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 610px;
+  height: 100%;
+}
+
+.company_logo {
+  position: absolute;
+  top: 2%;
+  left: 0;
+  width: 30%;
+}
+
+.company_title {
+  font-size: 36px;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.company_slogan {
+  font-size: 74px;
+  color: white;
+}

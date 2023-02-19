@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
+:root {
+  --gold: #a98f3a;
+}
+
+html,
+body,
+#__next {
+  width: 100vw;
+  height: 100vh;
+  font-family: "Quicksand", sans-serif;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url("../assets/gilroy/Gilroy-Bold.ttf");
+  font-weight: bold;
+  font-style: normal;
+}
+.title {
+  font-family: "Gilroy";
+  font-weight: bold;
+  line-height: 120%;
+}

@@ -14,6 +14,9 @@ module.exports = {
       fontFamily: {
         gilroy: ["Gilroy", "sans-serif"],
       },
+      screens: {
+        "large-tablet": "800px",
+      },
     },
   },
   plugins: [],

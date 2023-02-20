@@ -1,0 +1,12 @@
+.navbar_background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.darker_background {
+  background-color: rgba($color: #1e1e1e, $alpha: 0.84);
+}

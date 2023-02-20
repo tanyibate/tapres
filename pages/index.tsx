@@ -1,4 +1,6 @@
+import About from "@/components/sections/about/About";
 import Landing from "@/components/sections/landing/Landing";
+import Properties from "@/components/sections/properties/Properties";
 import Head from "next/head";
 
 export default function Home() {
@@ -12,6 +14,8 @@ export default function Home() {
       </Head>
       <main className="w-full">
         <Landing />
+        <About />
+        <Properties />
       </main>
     </>
   );

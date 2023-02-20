@@ -5,8 +5,8 @@ export default function Landing() {
   const arrayOfBlankSqaures = [0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19];
   const arrayOfBlankTextBackgroundSquares = Array.from(Array(12).keys());
   const returnSquares = (squares: any) => {
-    let oddColour = "darker_square";
-    let evenColour = "lighter_square";
+    let oddColour = "darker-square";
+    let evenColour = "lighter-square";
     let rowLength = 3;
     for (let i = 0; i < squares.length; i++) {
       if (arrayOfBlankSqaures.includes(i)) {
@@ -20,9 +20,7 @@ export default function Landing() {
         }
         let squareColor = oddColour;
         if (i % 2 === 0) squareColor = evenColour;
-        squares[i] = (
-          <div className={styles[squareColor]} key={"square" + i}></div>
-        );
+        squares[i] = <div className={squareColor} key={"square" + i}></div>;
       }
     }
     return squares;
@@ -34,14 +32,36 @@ export default function Landing() {
     >
       <div className={styles.square_container}>
         <div className={styles.grid_layout}>
-          {returnSquares(arrayOfTwentyFour)}
+          <div></div>
+          <div></div>
+          <div></div>
+          <div className="lighter-square"></div>
+          <div className="darker-square"></div>
+          <div className="lighter-square"></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div className="darker-square"></div>
+          <div className="lighter-square"></div>
+          <div className="darker-square"></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div className="lighter-square"></div>
+          <div className="darker-square"></div>
+          <div className="lighter-square"></div>
+          <div></div>
+          <div></div>
+          <div className="lighter-square"></div>
+          <div className="darker-square"></div>
+          <div className="lighter-square"></div>
+          <div className="darker-square"></div>
         </div>
       </div>
       <img
         src="/assets/landing-background.jpg"
         alt=""
         className="w-full opacity-25"
-        style={{ opacity: 0.25 }}
       />
       <div className={styles.text_background_square_container}>
         <div className={styles.text_background_layout}>
@@ -57,15 +77,10 @@ export default function Landing() {
           })}
         </div>
         <div className={styles.text_container}>
-          <img
-            src="/assets/tapres-logo-transparent.png"
-            alt=""
-            className={styles.company_logo}
-          />
           <div>
             <p className={styles.company_title}>Tapres</p>
             <p className={styles.company_slogan + " title"}>
-              New Generation<br></br> Homes
+              Next Generation<br></br> Homes
             </p>
           </div>
         </div>

@@ -31,18 +31,19 @@ export default function About() {
         <h2 className="text-2xl xl:text-4xl font-bold text-[#1E1E1E]">About</h2>
         <div className="text-lg text-[#3A3A3A] flex flex-col gap-y-10">
           <p>
-            We are an established specialist property investment company that
-            provide House-shares for healthcare professionals.
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
+            quisquam tenetur nemo excepturi atque!
           </p>
           <p>
-            We purchase properties in Oxford, Reading and High Wycombe,
-            re-develop them and then rent out over the long-term.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sint
+            veniam, suscipit magnam quibusdam ipsa eum rem odio officiis.
           </p>
           <p>
-            We let our properties to Healthcare Professionals. Such tenants
-            offer the advantage of stable, long-term employment and relatively
-            high incomes. By working in similar fields it also helps with tenant
-            cohesion to create a relaxing and friendly living environment.
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Commodi
+            officia quaerat non recusandae? Odio, esse? Sed doloremque aut et
+            earum quam, ipsum vero ex ea voluptas eius repudiandae voluptatibus
+            id similique. Similique expedita saepe, eius tenetur autem
+            architecto dolore!
           </p>
         </div>
       </div>

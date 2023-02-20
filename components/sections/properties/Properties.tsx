@@ -12,6 +12,50 @@ import "swiper/css/navigation";
 export default function Properties() {
   const slidesPerViewMobileRatio = 1.75 / 414;
   const slidesPerViewTabletRatio = 2.3 / 768;
+  const propertyList = [
+    {
+      imgUrl: "/assets/property-card-house-1.jpg",
+      title: "Luxury House",
+      description:
+        "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
+      price: "$10000",
+    },
+    {
+      imgUrl: "/assets/property-card-house-2.jpg",
+      title: "Apartment",
+      description:
+        "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
+      price: "$10000",
+    },
+    {
+      imgUrl: "/assets/property-card-house-3.jpg",
+      title: "Townhouse",
+      description:
+        "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
+      price: "$10000",
+    },
+    {
+      imgUrl: "/assets/property-card-house-1.jpg",
+      title: "Luxury House",
+      description:
+        "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
+      price: "$10000",
+    },
+    {
+      imgUrl: "/assets/property-card-house-2.jpg",
+      title: "Apartment",
+      description:
+        "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
+      price: "$10000",
+    },
+    {
+      imgUrl: "/assets/property-card-house-3.jpg",
+      title: "Townhouse",
+      description:
+        "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
+      price: "$10000",
+    },
+  ];
 
   const [slidesPerView, setSlidesPerView] = useState(3);
 
@@ -42,72 +86,13 @@ export default function Properties() {
         loop
         centeredSlides
       >
-        <SwiperSlide>
-          <PropertyCard
-            {...{
-              imgUrl: "/assets/property-card-house-1.jpg",
-              title: "Luxury House",
-              description:
-                "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
-              price: "$10000",
-            }}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <PropertyCard
-            {...{
-              imgUrl: "/assets/property-card-house-1.jpg",
-              title: "Luxury House 2",
-              description:
-                "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
-              price: "$10000",
-            }}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <PropertyCard
-            {...{
-              imgUrl: "/assets/property-card-house-1.jpg",
-              title: "Luxury House 3",
-              description:
-                "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
-              price: "$10000",
-            }}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <PropertyCard
-            {...{
-              imgUrl: "/assets/property-card-house-1.jpg",
-              title: "Luxury House ",
-              description:
-                "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
-              price: "$10000",
-            }}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <PropertyCard
-            {...{
-              imgUrl: "/assets/property-card-house-1.jpg",
-              title: "Luxury House 2",
-              description:
-                "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
-              price: "$10000",
-            }}
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <PropertyCard
-            {...{
-              imgUrl: "/assets/property-card-house-1.jpg",
-              title: "Luxury House 3",
-              description:
-                "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
-              price: "$10000",
-            }}
-          />
-        </SwiperSlide>
+        {propertyList.map((property, index) => {
+          return (
+            <SwiperSlide key={index}>
+              <PropertyCard {...property} />
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </div>
   );

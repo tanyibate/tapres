@@ -6,14 +6,19 @@ export default function PropertyCard({
   title,
   description,
   price,
+  clickHandler,
 }: {
   imgUrl: string;
   title: string;
   description: string;
   price: string;
+  clickHandler?: () => void;
 }) {
   return (
-    <div className="w-56 sm:w-64 large-tablet:w-60 md:w-80 lg:w-[325px] xl:w-96 aspect-[392/455] px-[2.5%] py-[3%] flex flex-col items-center justify-between border border-[#DCDCDC] border-solid rounded-lg">
+    <div
+      className="w-56 sm:w-64 large-tablet:w-60 md:w-80 lg:w-[325px] xl:w-96 aspect-[392/455] px-[2.5%] py-[3%] flex flex-col items-center justify-between border border-[#DCDCDC] border-solid rounded-lg cursor-pointer"
+      onClick={clickHandler}
+    >
       <img src={imgUrl} alt="" className="w-full" />
       <div className="w-full flex justify-start">
         <h3 className="font-gilroy text-black text-xl">{title}</h3>

@@ -38,3 +38,18 @@ body,
 .darker-square-video {
   background-color: rgba($color: #453b3b, $alpha: 0.52) !important;
 }
+
+.lg-has-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  .lg-object {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+.lg-outer .lg-thumb-item.active,
+.lg-outer .lg-thumb-item:hover {
+  border-color: var(--gold) !important;
+}

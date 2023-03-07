@@ -56,62 +56,69 @@ export default function Properties() {
     }
   }, [galleryOpen]);
   return (
-    <div className="w-full max-w-screen-xl mx-auto py-2  2xl:px-0 large-tablet:px-8">
-      <div className="flex justify-between mb-8 px-8 large-tablet:px-0">
-        <h2
-          className="text-2xl xl:text-4xl font-bold text-[#1E1E1E]"
-          onClick={() => {
-            lightGallery.current.openGallery();
+    <div className="w-full bg-[#EAEAEA] pb-16">
+      <div className="w-full max-w-screen-xl mx-auto py-2  2xl:px-0 large-tablet:px-8">
+        <div className="flex justify-between mb-8 px-8 large-tablet:px-0">
+          <h2
+            className="text-2xl xl:text-4xl font-bold text-[#1E1E1E]"
+            onClick={() => {
+              lightGallery.current.openGallery();
+            }}
+          >
+            Properties
+          </h2>
+        </div>
+        <Swiper
+          spaceBetween={10}
+          slidesPerView={slidesPerView}
+          loop
+          centeredSlides
+          breakpoints={{
+            800: {
+              centeredSlides: false,
+            },
           }}
         >
-          Properties
-        </h2>
-      </div>
-      <Swiper
-        spaceBetween={10}
-        slidesPerView={slidesPerView}
-        loop={slidesPerView < 3 ? true : false}
-        centeredSlides={slidesPerView < 3 ? true : false}
-      >
-        {propertyList.map((property, index) => {
-          return (
-            <SwiperSlide key={index}>
-              <div onClick={() => selectProperty(index)}>
-                <PropertyCard
-                  {...{
-                    ...property,
-                  }}
-                />
-              </div>
-            </SwiperSlide>
-          );
-        })}
-      </Swiper>
-      <LightGallery
-        speed={500}
-        plugins={[lgThumbnail]}
-        onInit={onInit}
-        dynamic
-        onBeforeClose={() => {
-          console.log("before close");
-          setGalleryOpen(false);
-        }}
-        dynamicEl={[
-          ...currentProperty.images.map((image) => {
-            return {
-              src: image,
-              thumb: image,
-            };
-          }),
+          {propertyList.map((property, index) => {
+            return (
+              <SwiperSlide key={index}>
+                <div onClick={() => selectProperty(index)}>
+                  <PropertyCard
+                    {...{
+                      ...property,
+                    }}
+                  />
+                </div>
+              </SwiperSlide>
+            );
+          })}
+        </Swiper>
+        <LightGallery
+          speed={500}
+          plugins={[lgThumbnail]}
+          onInit={onInit}
+          dynamic
+          onBeforeClose={() => {
+            console.log("before close");
+            setGalleryOpen(false);
+          }}
+          dynamicEl={[
+            ...currentProperty.images.map((image) => {
+              return {
+                src: image,
+                thumb: image,
+              };
+            }),
 
-          {
-            iframe: true,
-            src: currentProperty.streetView,
-            thumb:
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Google_Maps_icon_%282015-2020%29.svg/1200px-Google_Maps_icon_%282015-2020%29.svg.png",
-          },
-        ]}
-      ></LightGallery>
+            {
+              iframe: true,
+              src: currentProperty.streetView,
+              thumb:
+                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Google_Maps_icon_%282015-2020%29.svg/1200px-Google_Maps_icon_%282015-2020%29.svg.png",
+            },
+          ]}
+        ></LightGallery>
+      </div>
     </div>
   );
 }

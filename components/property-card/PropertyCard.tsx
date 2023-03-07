@@ -16,7 +16,7 @@ export default function PropertyCard({
 }) {
   return (
     <div
-      className="w-56 sm:w-64 large-tablet:w-60 md:w-80 lg:w-[325px] xl:w-96 aspect-[392/455] px-[2.5%] py-[3%] flex flex-col items-center justify-between border border-[#DCDCDC] border-solid rounded-lg cursor-pointer"
+      className="w-56 sm:w-64 large-tablet:w-60 md:w-80 lg:w-[325px] xl:w-96 aspect-[392/455] px-[2.5%] py-[3%] flex flex-col items-center justify-between border border-[#DCDCDC] border-solid rounded-lg cursor-pointer large-tablet:mx-auto bg-white"
       onClick={clickHandler}
     >
       <img src={imgUrl} alt="" className="w-full" />

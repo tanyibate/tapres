@@ -1,6 +1,8 @@
 import About from "@/components/sections/about/About";
+import Invest from "@/components/sections/invest/Invest";
 import Landing from "@/components/sections/landing/Landing";
 import Properties from "@/components/sections/properties/Properties";
+import TeamMembers from "@/components/sections/team-members/TeamMembers";
 import Head from "next/head";
 
 export default function Home() {
@@ -15,7 +17,9 @@ export default function Home() {
       <main className="w-full">
         <Landing />
         <About />
+        <TeamMembers />
         <Properties />
+        <Invest />
       </main>
     </>
   );

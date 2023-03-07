@@ -1,4 +1,5 @@
 import About from "@/components/sections/about/About";
+import Contact from "@/components/sections/contact/Contact";
 import Invest from "@/components/sections/invest/Invest";
 import Landing from "@/components/sections/landing/Landing";
 import Properties from "@/components/sections/properties/Properties";
@@ -20,6 +21,7 @@ export default function Home() {
         <TeamMembers />
         <Properties />
         <Invest />
+        <Contact />
       </main>
     </>
   );

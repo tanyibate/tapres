@@ -55,3 +55,38 @@ body,
 .lg-outer .lg-thumb-item:hover {
   border-color: var(--gold) !important;
 }
+
+input {
+  height: 48px;
+}
+
+textarea {
+  padding-top: 5px;
+}
+
+input,
+textarea {
+  outline-width: 0;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 5px;
+  width: 100%;
+  padding-left: 24px;
+  &::placeholder {
+    color: #ffffff;
+    font-size: 12px;
+    line-height: 16px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  input {
+    height: 68px;
+  }
+  input,
+  textarea {
+    &::placeholder {
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+}

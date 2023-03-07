@@ -4,9 +4,9 @@ import LandingMobile from "./LandingMobile";
 
 export default function Landing() {
   return (
-    <div>
+    <section>
       <LandingDesktop />
       <LandingMobile />
-    </div>
+    </section>
   );
 }

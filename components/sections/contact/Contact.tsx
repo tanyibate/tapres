@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Contact() {
   return (
-    <div className="bg-[#1E1E1E] w-full py-16">
+    <section className="bg-[#1E1E1E] w-full py-16">
       <div className="w-full max-w-screen-xl px-8 2xl:px-0 mx-auto text-white">
         <div className="w-[90%] mx-auto">
           <div className="flex flex-col items-center gap-y-2 text-center">
@@ -81,6 +81,6 @@ export default function Contact() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

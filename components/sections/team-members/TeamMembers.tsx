@@ -3,7 +3,7 @@ import styles from "./team-member-styles.module.scss";
 
 export default function TeamMembers() {
   return (
-    <div className="w-full max-w-screen-xl flex justify-center mx-auto md:px-8 md:pb-8 relative">
+    <section className="w-full max-w-screen-xl flex justify-center mx-auto md:px-8 md:pb-8 relative">
       <div className={styles.container}>
         <img
           srcSet="/assets/about-us-background-mobile.jpg"
@@ -75,6 +75,6 @@ export default function TeamMembers() {
         </div>
       </div>
       <div className="w-screen hidden md:block absolute bottom-0 mx-auto z-[-5] h-1/6 bg-[#EAEAEA]"></div>
-    </div>
+    </section>
   );
 }

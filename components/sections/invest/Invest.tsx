@@ -3,7 +3,7 @@ import React from "react";
 
 export default function Invest() {
   return (
-    <div className="w-full flex flex-col  items-center justify-center md:flex-row max-w-screen-xl mx-auto py-16 gap-y-12">
+    <section className="w-full flex flex-col  items-center justify-center md:flex-row max-w-screen-xl mx-auto py-16 gap-y-12">
       <div className="w-full md:w-1/2 pl-8">
         <h2 className="text-2xl xl:text-4xl font-bold text-[#1E1E1E]">
           Invest
@@ -24,6 +24,6 @@ export default function Invest() {
       <div className="w-full md:w-1/2 pl-8 md:pl-0">
         <img src="/assets/invest-image.jpg" alt="" className="w-full" />
       </div>
-    </div>
+    </section>
   );
 }

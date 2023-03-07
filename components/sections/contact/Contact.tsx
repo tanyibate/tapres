@@ -11,7 +11,7 @@ export default function Contact() {
               Send a message to Tapres
             </h2>
             <p className="text-sm">
-              Just submit your details and we'll be in touch shortly.
+              Just submit your details and we&apos;ll be in touch shortly.
             </p>
             <div className="space-y-4 mb-8">
               <div className="flex gap-x-4 items-center">

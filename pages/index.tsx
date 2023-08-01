@@ -5,6 +5,7 @@ import Landing from "@/components/sections/landing/Landing";
 import Properties from "@/components/sections/properties/Properties";
 import TeamMembers from "@/components/sections/team-members/TeamMembers";
 import Head from "next/head";
+import { GetServerSideProps } from "next";
 
 export default function Home() {
   return (
@@ -26,3 +27,9 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    props: {},
+  };
+};

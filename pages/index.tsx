@@ -6,8 +6,17 @@ import Properties from "@/components/sections/properties/Properties";
 import TeamMembers from "@/components/sections/team-members/TeamMembers";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
+import Loading from "@/components/loading/Loading";
+import { useState } from "react";
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
+
+  // Display loading screen for 0.5 seconds
+  setTimeout(() => {
+    setLoading(false);
+  }, 500);
+
   return (
     <>
       <Head>
@@ -16,6 +25,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      {/* Display loading screen */}
+      {loading && <Loading />}
       <main className="w-full">
         <Landing />
         <About />

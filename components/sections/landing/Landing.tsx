@@ -1,12 +1,18 @@
-import React from "react";
-import LandingDesktop from "./LandingDesktop";
-import LandingMobile from "./LandingMobile";
+import Loading from "@/components/loading/Loading";
+import React, { Suspense, lazy } from "react";
 
 export default function Landing() {
+  // Lazy load the components
+  const LandingDesktop = lazy(() => import("./LandingDesktop"));
+  const LandingMobile = lazy(() => import("./LandingMobile"));
   return (
     <section>
-      <LandingDesktop />
-      <LandingMobile />
+      <Suspense fallback={<Loading />}>
+        <LandingDesktop />
+      </Suspense>
+      <Suspense fallback={<Loading />}>
+        <LandingMobile />
+      </Suspense>
     </section>
   );
 }

@@ -1,21 +1,19 @@
-import About from "@/components/sections/about/About";
-import Contact from "@/components/sections/contact/Contact";
-import Invest from "@/components/sections/invest/Invest";
 import Landing from "@/components/sections/landing/Landing";
-import Properties from "@/components/sections/properties/Properties";
-import TeamMembers from "@/components/sections/team-members/TeamMembers";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
-import Loading from "@/components/loading/Loading";
-import { useState } from "react";
+import { Suspense, lazy } from "react";
 
 export default function Home() {
-  const [loading, setLoading] = useState(true);
-
-  // Display loading screen for 0.5 seconds
-  setTimeout(() => {
-    setLoading(false);
-  }, 500);
+  // Lazy load the components
+  const Properties = lazy(
+    () => import("@/components/sections/properties/Properties")
+  );
+  const TeamMembers = lazy(
+    () => import("@/components/sections/team-members/TeamMembers")
+  );
+  const About = lazy(() => import("@/components/sections/about/About"));
+  const Contact = lazy(() => import("@/components/sections/contact/Contact"));
+  const Invest = lazy(() => import("@/components/sections/invest/Invest"));
 
   return (
     <>
@@ -27,11 +25,21 @@ export default function Home() {
       </Head>
       <main className="w-full">
         <Landing />
-        <About />
-        <TeamMembers />
-        <Properties />
-        <Invest />
-        <Contact />
+        <Suspense fallback={<div>Loading...</div>}>
+          <About />
+        </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <TeamMembers />
+        </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Properties />
+        </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Invest />
+        </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Contact />
+        </Suspense>
       </main>
     </>
   );

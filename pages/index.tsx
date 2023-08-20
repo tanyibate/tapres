@@ -1,9 +1,18 @@
 import Landing from "@/components/sections/landing/Landing";
 import Head from "next/head";
 import { GetServerSideProps } from "next";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useState, useEffect } from "react";
+import Loading from "@/components/loading/Loading";
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
+
+  // After 200ms, set loading to false
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 400);
+  }, []);
   // Lazy load the components
   const Properties = lazy(
     () => import("@/components/sections/properties/Properties")
@@ -23,6 +32,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      {loading && <Loading />}
       <main className="w-full">
         <Landing />
         <Suspense fallback={<div>Loading...</div>}>

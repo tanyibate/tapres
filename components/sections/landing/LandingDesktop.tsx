@@ -1,4 +1,6 @@
 import styles from "./landing-styles.module.scss";
+import Image from "next/image";
+import landingImage from "@/assets/images/landing-background.jpg";
 
 export default function Landing() {
   const arrayOfTwentyFour = Array.from(Array(24).keys());
@@ -58,11 +60,7 @@ export default function Landing() {
           <div className="darker-square"></div>
         </div>
       </div>
-      <img
-        src="/assets/landing-background.jpg"
-        alt=""
-        className="w-full opacity-25"
-      />
+      <Image src={landingImage} alt="" className="w-full opacity-25" />
       <div className={styles.text_background_square_container}>
         <div className={styles.text_background_layout}>
           {arrayOfBlankTextBackgroundSquares.map((square, index) => {

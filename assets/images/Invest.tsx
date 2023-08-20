@@ -24,7 +24,7 @@ export default function Invest() {
         <Button white>Know More</Button>
       </div>
       <div className="w-full md:flex-1 pl-8 md:pl-0 relative block min-h-full">
-        <Image src={investImage} alt="" className="w-full" />
+        <Image src={investImage} alt="" width={400} className="w-full" />
       </div>
     </section>
   );

@@ -105,8 +105,8 @@ export default function Properties() {
           dynamicEl={[
             ...currentProperty.images.map((image) => {
               return {
-                src: image,
-                thumb: image,
+                src: image as string,
+                thumb: image as string,
               };
             }),
 

@@ -1,17 +1,21 @@
 import React from "react";
 import styles from "./team-member-styles.module.scss";
+import Image from "next/image";
+import headshot from "@/assets/images/headshot.jpeg";
+import aboutUs from "@/assets/images/about-us-background.jpg";
+import aboutUsMobile from "@/assets/images/about-us-background-mobile.jpg";
 
 export default function TeamMembers() {
   return (
     <section className="w-full max-w-screen-xl flex justify-center mx-auto md:px-8 md:pb-8 relative">
       <div className={styles.container}>
-        <img
-          srcSet="/assets/about-us-background-mobile.jpg"
+        <Image
+          src={aboutUsMobile}
           alt=""
           className="w-full opacity-25 md:hidden"
         />
-        <img
-          src="/assets/about-us-background.jpg"
+        <Image
+          src={aboutUs}
           alt=""
           className="w-full opacity-25 hidden md:block"
         />
@@ -67,8 +71,8 @@ export default function TeamMembers() {
           </div>
         </div>
         <div className={styles.img_container}>
-          <img
-            src="/assets/headshot.jpeg"
+          <Image
+            src={headshot}
             alt=""
             className="relative w-9/12 h-5/6 md:w-8/12 md:h-3/4"
           />

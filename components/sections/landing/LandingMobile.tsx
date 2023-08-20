@@ -1,4 +1,6 @@
 import styles from "./landing-mobile-styles.module.scss";
+import Image from "next/image";
+import landingImage from "@/assets/images/landing-background.jpg";
 
 export default function LandingMobile() {
   return (
@@ -9,7 +11,7 @@ export default function LandingMobile() {
         <div className="darker-square"></div>
         <div className="lighter-square"></div>
       </div>
-      <div className={styles.background_image}></div>
+      <Image src={landingImage} className={styles.background_image} alt="" />
 
       <div className={styles.text_background_grid_container}>
         <div></div>

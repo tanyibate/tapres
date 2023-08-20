@@ -1,5 +1,6 @@
 import React from "react";
 import Button from "../button/Button";
+import Image from "next/image";
 
 export default function PropertyCard({
   imgUrl,

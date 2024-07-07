@@ -29,19 +29,27 @@ export default function Navbar() {
       ></div>
       <img src="/assets/tapres-logo-transparent.png" alt="" className="w-32" />
       <ul className="text-white text-xl items-center gap-x-12 hidden xl:flex">
-        {["Home", "Properties", "Projects", "Invest"].map((item, index) => {
+        {["Home", "About", "Properties", "Invest"].map((item, index) => {
           return (
             <li
               className="cursor-pointer hover:text-gold"
               key={"navbar-item-" + index}
             >
-              <a>{item}</a>
+              <a
+                href={`#${
+                  item === "Home" ? "landing" : item.toLocaleLowerCase()
+                }-section`}
+              >
+                {item}
+              </a>
             </li>
           );
         })}
 
         <li className="cursor-pointer">
-          <Button>Contact</Button>
+          <a href="#contact-section">
+            <Button>Contact</Button>
+          </a>
         </li>
       </ul>
       <div className="xl:hidden">

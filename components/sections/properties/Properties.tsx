@@ -56,7 +56,7 @@ export default function Properties() {
     }
   }, [galleryOpen]);
   return (
-    <section className="w-full bg-[#EAEAEA] pb-16">
+    <section className="w-full bg-[#EAEAEA] pb-16" id="properties-section">
       <div className="w-full max-w-screen-xl mx-auto py-2  2xl:px-0 large-tablet:px-8">
         <div className="flex justify-between mb-8 px-8 large-tablet:px-0">
           <h2

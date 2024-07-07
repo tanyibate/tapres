@@ -5,7 +5,10 @@ import investImage from "@/assets/images/invest-image.jpg";
 
 export default function Invest() {
   return (
-    <section className="w-full flex flex-col  items-center justify-center md:flex-row max-w-screen-xl mx-auto py-16 gap-y-12">
+    <section
+      className="w-full flex flex-col  items-center justify-center md:flex-row max-w-screen-xl mx-auto py-16 gap-y-12"
+      id="invest-section"
+    >
       <div className="w-full md:flex-1 pl-8">
         <h2 className="text-2xl xl:text-4xl font-bold text-[#1E1E1E]">
           Invest

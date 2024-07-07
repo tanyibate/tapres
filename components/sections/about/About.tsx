@@ -2,7 +2,10 @@ import React from "react";
 
 export default function About() {
   return (
-    <section className="w-full flex flex-col lg:flex-row xl:justify-between py-16 xl:py-36 max-w-screen-xl max-h-fit mx-auto gap-y-4 lg:gap-y-0 lg:px-8 2xl:px-0">
+    <section
+      className="w-full flex flex-col lg:flex-row xl:justify-between py-16 xl:py-36 max-w-screen-xl max-h-fit mx-auto gap-y-4 lg:gap-y-0 lg:px-8 2xl:px-0"
+      id="about-section"
+    >
       <div className="w-full lg:w-1/2  relative">
         <iframe
           src="https://www.youtube.com/embed/sssrfVJUdFk"

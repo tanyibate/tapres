@@ -6,7 +6,7 @@ export default function Landing() {
   const LandingDesktop = lazy(() => import("./LandingDesktop"));
   const LandingMobile = lazy(() => import("./LandingMobile"));
   return (
-    <section>
+    <section id="landing-section">
       <Suspense fallback={<Loading />}>
         <LandingDesktop />
       </Suspense>

@@ -7,7 +7,10 @@ import aboutUsMobile from "@/assets/images/about-us-background-mobile.jpg";
 
 export default function TeamMembers() {
   return (
-    <section className="w-full max-w-screen-xl flex justify-center mx-auto md:px-8 md:pb-8 relative">
+    <section
+      className="w-full max-w-screen-xl flex justify-center mx-auto md:px-8 md:pb-8 relative"
+      id="team-members-section"
+    >
       <div className={styles.container}>
         <Image
           src={aboutUsMobile}

@@ -1,6 +1,7 @@
 import styles from "./landing-styles.module.scss";
 import Image from "next/image";
 import landingImage from "@/assets/images/landing-background.jpg";
+import Button from "@/components/button/Button";
 
 export default function Landing() {
   const arrayOfTwentyFour = Array.from(Array(24).keys());
@@ -80,6 +81,11 @@ export default function Landing() {
             <p className={styles.company_slogan + " title"}>
               Next Generation<br></br> Homes
             </p>
+            <div className="pt-8">
+              <a href="#projects-section">
+                <Button white>View our Projects</Button>
+              </a>
+            </div>
           </div>
         </div>
       </div>

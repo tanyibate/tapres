@@ -1,93 +1,23 @@
 const propertyList = [
   {
-    imgUrl: "/assets/property-card-house-1.jpg",
-    title: "Luxury House",
+    imgUrl:
+      "https://cf.bstatic.com/xdata/images/hotel/max1280x900/556898594.jpg?k=814210d28a1a96ba23cdd4da08ad6b5874b81b75a9bfab6b940721a40e22ae15&o=&hp=1",
+    title: "Modern Apartment in the Heart of Bath",
     description:
-      "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
-    price: "$10000",
+      "Modern Apartment in the Heart of Bath is set in the Bath City Centre district of Bath, 200 metres from Bath Abbey, 70 metres from The Roman Baths and less than 1 km from The Circus Bath. ",
+    price: "Book Now",
     images: [
-      "/assets/property-card-house-1.jpg",
-      "https://loveincorporated.blob.core.windows.net/contentimages/gallery/64b56a3c-7d4f-48e9-b581-ee6e2ccfd2e0-billionaire-bling-pool.jpg",
-      "https://st.hzcdn.com/simgs/pictures/kitchens/luxury-house-in-buckinghamshire-lida-cucina-img~2b517d9e032b16e3_4-2558-1-fe93dba.jpg",
-      "https://i.pinimg.com/736x/c6/6f/b7/c66fb7b279a660e3daf84e7d32efdf07--luxury-rooms-luxury-living.jpg",
+      "https://cf.bstatic.com/xdata/images/hotel/max1280x900/556898594.jpg?k=814210d28a1a96ba23cdd4da08ad6b5874b81b75a9bfab6b940721a40e22ae15&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1280x900/556898634.jpg?k=d8b59eee1f5ddd829f29dac55990ea2fdd473710795cee6d424abe4064cdb3d3&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1280x900/556898622.jpg?k=888f3c9f2034a3c9f11fb14dff0553d6068e9b564b4301c121ba69a494537d95&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1280x900/556898553.jpg?k=e9fd257cc01b8fcf2e0bff9cde425d5241af2534c8fb54c0ae2e03b356e965de&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1280x900/556898339.jpg?k=99b065d9e749a3906c1efb602205d3ef9d674a3c6cfa74ea10abe7d92d629fbe&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1280x900/556898468.jpg?k=ab5974173624fb34685e65c07ead587295cc4015ca51ff36a1dc37c575d051d7&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1280x900/556898585.jpg?k=3daf017079ff0e6798f1094c412b60bdcdc31f9168d0aae1fd4a554286f1f8e2&o=&hp=1",
+      "https://cf.bstatic.com/xdata/images/hotel/max1280x900/556898548.jpg?k=bced014bb80b6c338f1b1b6ffc99a940f48d64e4882dee593afedb13c5f853db&o=&hp=1",
     ],
     streetView:
       "https://www.google.com/maps/embed?pb=!4v1677076262535!6m8!1m7!1sTVqkQqGXhFctw-dwhYoNbg!2m2!1d51.49530631535228!2d-0.1784244203131543!3f140.92233906021835!4f-1.178956891499979!5f0.7820865974627469",
-  },
-  {
-    imgUrl: "/assets/property-card-house-2.jpg",
-    title: "Apartment",
-    description:
-      "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
-    price: "$10000",
-    images: [
-      "/assets/property-card-house-2.jpg",
-      "https://pix10.agoda.net/hotelImages/167/167577/167577_15020322560025067789.jpg?ca=3&ce=1&s=1024x768",
-      "https://cdn.apartmenttherapy.info/image/upload/v1562796924/at/house%20tours/2019-07/Raechel%20L./MH20190701-17.jpg",
-      "https://www.thespruce.com/thmb/oJGeEk9FPfjAbeWfDkjdb9Xk9TY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/perfect-studio-apartment-layouts-to-inspire-4124066-hero-86a20ac386734170914645029e7bb568.jpg",
-    ],
-    streetView:
-      "https://www.google.com/maps/embed?pb=!4v1677076445474!6m8!1m7!1s-wN79St7PAgXqHAhZ63J1g!2m2!1d51.45370760913361!2d-0.968956466456663!3f76.41857318160787!4f-14.085711533156584!5f0.7820865974627469",
-  },
-  {
-    imgUrl: "/assets/property-card-house-3.jpg",
-    title: "Townhouse",
-    description:
-      "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
-    price: "$10000",
-    images: [
-      "/assets/property-card-house-3.jpg",
-      "https://img.gtsstatic.net/reno/imagereader.aspx?imageurl=https%3A%2F%2Fwww.sothebysrealty.com%2Fblog-api%2Fwp-content%2Fuploads%2F2022%2F07%2Fimagereader-11.jpeg&option=N&permitphotoenlargement=false&w=1200",
-      "https://www.pfeifferdesign.co.uk/wp-content/uploads/2019/03/Marine-Parade-PH-1.jpg",
-      "https://st.hzcdn.com/simgs/pictures/bedrooms/chelsea-townhouse-compass-and-rose-img~9171b36303e1e96b_4-5075-1-72a0c9f.jpg",
-    ],
-    streetView:
-      "https://www.google.com/maps/embed?pb=!4v1677076771969!6m8!1m7!1sXOeKQSHCwGyFJBZQx-P75w!2m2!1d53.47739252154931!2d-2.24378711641236!3f22.570329098459013!4f-4.408950785235717!5f0.7820865974627469",
-  },
-  {
-    imgUrl: "/assets/property-card-house-1.jpg",
-    title: "Luxury House",
-    description:
-      "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
-    price: "$10000",
-    images: [
-      "/assets/property-card-house-1.jpg",
-      "https://loveincorporated.blob.core.windows.net/contentimages/gallery/64b56a3c-7d4f-48e9-b581-ee6e2ccfd2e0-billionaire-bling-pool.jpg",
-      "https://st.hzcdn.com/simgs/pictures/kitchens/luxury-house-in-buckinghamshire-lida-cucina-img~2b517d9e032b16e3_4-2558-1-fe93dba.jpg",
-      "https://i.pinimg.com/736x/c6/6f/b7/c66fb7b279a660e3daf84e7d32efdf07--luxury-rooms-luxury-living.jpg",
-    ],
-    streetView:
-      "https://www.google.com/maps/embed?pb=!4v1677076262535!6m8!1m7!1sTVqkQqGXhFctw-dwhYoNbg!2m2!1d51.49530631535228!2d-0.1784244203131543!3f140.92233906021835!4f-1.178956891499979!5f0.7820865974627469",
-  },
-  {
-    imgUrl: "/assets/property-card-house-2.jpg",
-    title: "Apartment",
-    description:
-      "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
-    price: "$10000",
-    images: [
-      "/assets/property-card-house-2.jpg",
-      "https://pix10.agoda.net/hotelImages/167/167577/167577_15020322560025067789.jpg?ca=3&ce=1&s=1024x768",
-      "https://cdn.apartmenttherapy.info/image/upload/v1562796924/at/house%20tours/2019-07/Raechel%20L./MH20190701-17.jpg",
-      "https://www.thespruce.com/thmb/oJGeEk9FPfjAbeWfDkjdb9Xk9TY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/perfect-studio-apartment-layouts-to-inspire-4124066-hero-86a20ac386734170914645029e7bb568.jpg",
-    ],
-    streetView:
-      "https://www.google.com/maps/embed?pb=!4v1677076445474!6m8!1m7!1s-wN79St7PAgXqHAhZ63J1g!2m2!1d51.45370760913361!2d-0.968956466456663!3f76.41857318160787!4f-14.085711533156584!5f0.7820865974627469",
-  },
-  {
-    imgUrl: "/assets/property-card-house-3.jpg",
-    title: "Townhouse",
-    description:
-      "Donec in iaculis lectus, id molestie odio. Sed eget efficitur erat",
-    price: "$10000",
-    images: [
-      "/assets/property-card-house-3.jpg",
-      "https://img.gtsstatic.net/reno/imagereader.aspx?imageurl=https%3A%2F%2Fwww.sothebysrealty.com%2Fblog-api%2Fwp-content%2Fuploads%2F2022%2F07%2Fimagereader-11.jpeg&option=N&permitphotoenlargement=false&w=1200",
-      "https://www.pfeifferdesign.co.uk/wp-content/uploads/2019/03/Marine-Parade-PH-1.jpg",
-      "https://st.hzcdn.com/simgs/pictures/bedrooms/chelsea-townhouse-compass-and-rose-img~9171b36303e1e96b_4-5075-1-72a0c9f.jpg",
-    ],
-    streetView:
-      "https://www.google.com/maps/embed?pb=!4v1677076771969!6m8!1m7!1sXOeKQSHCwGyFJBZQx-P75w!2m2!1d53.47739252154931!2d-2.24378711641236!3f22.570329098459013!4f-4.408950785235717!5f0.7820865974627469",
   },
 ];
 

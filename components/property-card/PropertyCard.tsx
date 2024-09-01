@@ -17,17 +17,17 @@ export default function PropertyCard({
 }) {
   return (
     <div
-      className="w-56 sm:w-64 large-tablet:w-60 md:w-80 lg:w-[325px] xl:w-96 aspect-[392/455] px-[2.5%] py-[3%] flex flex-col items-center justify-between border border-[#DCDCDC] border-solid rounded-lg cursor-pointer large-tablet:mx-auto bg-white"
+      className="relative w-56 sm:w-64 large-tablet:w-60 md:w-80 lg:w-[325px] xl:w-96 aspect-[392/455] px-[2.5%] py-[3%] flex flex-col items-center  border border-[#DCDCDC] border-solid rounded-lg cursor-pointer large-tablet:mx-auto bg-white"
       onClick={clickHandler}
     >
-      <img src={imgUrl} alt="" className="w-full" />
-      <div className="w-full flex justify-start">
-        <h3 className="font-gilroy text-black text-xl">{title}</h3>
+      <div>
+        <img src={imgUrl} alt="" className="w-full aspect-[5/3] mb-2" />
+        <div className="w-full flex justify-start mb">
+          <h3 className="font-gilroy text-black text-xl">{title}</h3>
+        </div>
+        <p className="text-black text-sm mb-4">{description}</p>
       </div>
-      <p className="lg:text-lg text-black text-sm md:text-base">
-        {description}
-      </p>
-      <div className="w-full flex justify-start">
+      <div className="w-full flex justify-start mb-2 absolute left-[2.5%] bottom-0">
         <Button white>{price}</Button>
       </div>
     </div>

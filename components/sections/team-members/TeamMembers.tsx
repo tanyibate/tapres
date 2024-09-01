@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./team-member-styles.module.scss";
 import Image from "next/image";
-import headshot from "@/assets/images/headshot.jpeg";
+import headshot from "@/assets/images/modified_headshot.jpg";
 import aboutUs from "@/assets/images/about-us-background.jpg";
 import aboutUsMobile from "@/assets/images/about-us-background-mobile.jpg";
 
@@ -48,28 +48,20 @@ export default function TeamMembers() {
             " text-white pl-8 pt-10 pr-4 md:pr-2 lg:pl-20 md:pt-20"
           }
         >
-          <h2 className="font-bold font-gilroy text-xl md:text-2xl">Julia</h2>
+          <h2 className="font-bold font-gilroy text-xl md:text-2xl">Peter</h2>
           <div className="space-y-4">
             <p className="text-xs lg:text-base">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta,
-              itaque quas quibusdam architecto nostrum repudiandae, ab
-              recusandae iure totam officia doloremque? Sit quam, quod ipsam
-              recusandae vel nisi reprehenderit itaque?
+              Peter is founder and Managing Director of Tapres LTD. He transfers
+              the constant changes in the IT industry unto the property market
+              to provide high innovative next generation housing for tenants and
+              investors. He has done the one year master mind Programme with
+              Property Investment Network-PIN
             </p>
             <p className="text-xs lg:text-base">
-              <span className="text-gold">Lorem ipsum dolor: </span>Lorem ipsum
-              dolor sit amet consectetur, adipisicing elit. Praesentium ut
-              fugiat molestiae voluptate reiciendis alias, unde error dolor!
-            </p>
-            <p className="text-xs lg:text-base">
-              <span className="text-gold">Lorem ipsum dolor sit: </span>Lorem
-              ipsum dolor sit amet consectetur, adipisicing elit. Praesentium ut
-              fugiat molestiae voluptate reiciendis alias, unde error dolor!
-            </p>
-            <p className="text-xs lg:text-base">
-              <span className="text-gold">Lorem ipsum dolor: </span>Lorem ipsum
-              dolor sit amet consectetur, adipisicing elit. Praesentium ut
-              fugiat molestiae voluptate reiciendis alias, unde error dolor!
+              <span className="text-gold">IT Security Architect: </span>Over 20
+              years as an IT consultant with many household name companies. He
+              is very creative and collaborates other people to bring about
+              meaning changes for people and companies.
             </p>
           </div>
         </div>
@@ -78,6 +70,9 @@ export default function TeamMembers() {
             src={headshot}
             alt=""
             className="relative w-9/12 h-5/6 md:w-8/12 md:h-3/4"
+            style={{
+              objectFit: "cover",
+            }}
           />
         </div>
       </div>

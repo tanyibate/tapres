@@ -23,7 +23,7 @@ export default function About() {
         <div className="text-lg text-[#3A3A3A] space-y-2">
           <p>
             Tapres limited was founded in 2022 with the mission to provide
-            Houses of Multiple Occupancy (HMO's) to professional by buying,
+            Houses of Multiple Occupancy (HMO&apos;s) to professional by buying,
             renovate, re-mortgage and rent using investor’s money and bridging
             loans. We also provide home away from home by providing high quality
             Serviced accommodation(SA).

@@ -20,7 +20,7 @@ export default function Invest() {
           </p>
           <p>
             Tapres offers investors a convenient way for investors to be
-            involved in property and achieve a dafe yet excellent return on
+            involved in property and achieve a safe yet excellent return on
             their capital.
           </p>
         </div>

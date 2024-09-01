@@ -81,7 +81,7 @@ export default function Landing() {
             <p className={styles.company_slogan + " title"}>
               Next Generation<br></br> Homes
             </p>
-            <div className="pt-8">
+            <div className="pt-8 bg-transparent">
               <a href="#projects-section">
                 <Button white>View our Projects</Button>
               </a>

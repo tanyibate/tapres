@@ -38,11 +38,12 @@ export default function Home() {
       {loading && <Loading />}
       <main className="w-full">
         <Landing />
-        <Suspense fallback={<div>Loading...</div>}>
-          <Projects />
-        </Suspense>
+
         <Suspense fallback={<div>Loading...</div>}>
           <About />
+        </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Projects />
         </Suspense>
         <Suspense fallback={<div>Loading...</div>}>
           <TeamMembers />

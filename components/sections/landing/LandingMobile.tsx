@@ -1,6 +1,7 @@
 import styles from "./landing-mobile-styles.module.scss";
 import Image from "next/image";
 import landingImage from "@/assets/images/landing-background.jpg";
+import Button from "@/components/button/Button";
 
 export default function LandingMobile() {
   return (
@@ -33,6 +34,11 @@ export default function LandingMobile() {
           <div className="text-4xl sm:text-7xl font-gilroy font-bold text-white bg-transparent">
             Next Generation <br />
             Homes
+          </div>
+          <div className="pt-8 bg-transparent">
+            <a href="#projects-section">
+              <Button white>View our Projects</Button>
+            </a>
           </div>
         </div>
       </div>

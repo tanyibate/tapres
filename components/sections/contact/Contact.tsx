@@ -1,7 +1,47 @@
 import Button from "@/components/button/Button";
 import React from "react";
+import { useForm } from "react-hook-form";
+
+const Input = ({
+  label,
+  register,
+  required,
+  type = "text",
+  pattern,
+  errorMessage,
+  labelText,
+}: {
+  labelText: string;
+  label: string;
+  register: any;
+  required: boolean;
+  type?: string;
+  pattern?: RegExp;
+  errorMessage?: string;
+}) => (
+  <div className="space-y-1 flex-1">
+    <div className="flex gap-x-2">
+      <label htmlFor={label}>{labelText}</label>
+      <div className="text-red-500">{errorMessage}</div>
+    </div>
+    <input
+      type={type}
+      id={label}
+      {...register(label, { required, pattern })}
+      className={`text-sm md:text-lg font-bold ${
+        errorMessage && "border border-red-500"
+      }`}
+    />
+  </div>
+);
 
 export default function Contact() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   return (
     <section className="bg-[#1E1E1E] w-full py-16" id="contact-section">
       <div className="w-full max-w-screen-xl px-8 2xl:px-0 mx-auto text-white">
@@ -14,7 +54,7 @@ export default function Contact() {
               Just submit your details and we&apos;ll be in touch shortly.
             </p>
             <div className="space-y-4 mb-8">
-              <div className="flex gap-x-4 items-center">
+              {/*<div className="flex gap-x-4 items-center">
                 <div className="w-8">
                   <img
                     src="/assets/phone-icon.png"
@@ -23,7 +63,7 @@ export default function Contact() {
                   />
                 </div>
                 <span className="md:text-xl font-bold">07648344343</span>
-              </div>
+              </div>*/}
               <div className="flex gap-x-4 items-center">
                 <div className="w-8">
                   <img
@@ -32,40 +72,39 @@ export default function Contact() {
                     className="h-6 md:h-8"
                   />
                 </div>
-                <span className="md:text-xl font-bold">test@mail.com</span>
+                <span className="md:text-xl font-bold">info@tapres.com</span>
               </div>
             </div>
           </div>
           <div>
-            <form className="space-y-4">
-              <div className="space-y-1">
-                <label
-                  htmlFor="fullname"
-                  className="text-sm md:text-lg font-bold"
-                >
-                  Full Name
-                </label>
-                <input type="text" name="fullname" id="fullname" />
-              </div>
+            <form
+              className="space-y-4"
+              onSubmit={handleSubmit((data) => console.log(data))}
+            >
+              <Input
+                label="name"
+                register={register}
+                required
+                errorMessage={errors.name && "Name is required"}
+                labelText="Name"
+              />
               <div className="flex w-full flex-col md:flex-row-reverse gap-y-4 md:gap-y-0 md:gap-x-6">
-                <div className="space-y-1 flex-1">
-                  <label
-                    htmlFor="email"
-                    className="text-sm md:text-lg font-bold"
-                  >
-                    Email
-                  </label>
-                  <input type="text" name="email" id="email" />
-                </div>
-                <div className="space-y-1 flex-1">
-                  <label
-                    htmlFor="phonenumber"
-                    className="text-sm md:text-lg font-bold"
-                  >
-                    Phone Number
-                  </label>
-                  <input type="text" name="phonenumber" id="phonenumber" />
-                </div>
+                <Input
+                  label="email"
+                  register={register}
+                  required
+                  type="email"
+                  errorMessage={errors.Email && "Email is required"}
+                  labelText="Email"
+                />
+                <Input
+                  label="phoneNumber"
+                  register={register}
+                  required
+                  pattern={/^\d{10}$/}
+                  errorMessage={errors.phoneNumber && "Phone number is invalid"}
+                  labelText="Phone Number"
+                />
               </div>
               <div className="space-y-1">
                 <label
@@ -74,7 +113,17 @@ export default function Contact() {
                 >
                   Message
                 </label>
-                <textarea name="message" id="message" rows={10}></textarea>
+                <textarea
+                  id="message"
+                  rows={10}
+                  {...register("message", { required: true })}
+                  className={
+                    `${
+                      errors.message && "border border-red-500"
+                    } w-full p-2 text-white` +
+                    ` ${errors.message ? "border-red-500" : "border-white"}`
+                  }
+                ></textarea>
               </div>
               <Button white> Send a Request</Button>
             </form>

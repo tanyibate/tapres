@@ -56,7 +56,7 @@ export default function Projects() {
     }
   }, [galleryOpen]);
   return (
-    <section className="w-full bg-[#EAEAEA] py-8" id="projects-section">
+    <section className="w-full bg-white py-8" id="projects-section">
       <div className="w-full max-w-screen-xl mx-auto py-2  2xl:px-0 large-tablet:px-8">
         <div className="flex justify-between mb-8 px-8 large-tablet:px-0">
           <h2
@@ -82,11 +82,12 @@ export default function Projects() {
           {propertyList.map((property, index) => {
             return (
               <SwiperSlide key={index}>
-                <div onClick={() => selectProperty(index)}>
+                <div>
                   <PropertyCard
                     {...{
                       ...property,
                       price: "Invest Now",
+                      openGallery: () => selectProperty(index),
                     }}
                   />
                 </div>

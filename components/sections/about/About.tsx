@@ -3,20 +3,20 @@ import React from "react";
 export default function About() {
   return (
     <section
-      className="w-full flex flex-col lg:flex-row xl:justify-between py-16 max-w-screen-xl max-h-fit mx-auto gap-y-4 lg:gap-y-0 lg:px-8 2xl:px-0"
+      className="w-full flex flex-col-reverse lg:flex-row xl:justify-between py-16 max-w-screen-xl max-h-fit mx-auto gap-y-4 lg:gap-y-0 lg:px-8 2xl:px-0"
       id="about-section"
     >
-      <div className="w-full lg:w-1/4  relative">
+      <div className="w-full lg:w-5/12  relative">
         <iframe
           src="https://www.youtube.com/embed/2Mj7CIla3L4"
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen
-          className="w-full rounded-tr-xl rounded-br-xl lg:rounded-xl"
+          className="w-11/12 rounded-tr-xl rounded-br-xl lg:rounded-xl mx-auto aspect-[9/16]"
         ></iframe>
       </div>
-      <div className="w-full lg:w-3/4 flex flex-col gap-y-2 items-start  px-8 lg:px-0 lg:pl-4">
+      <div className="w-full lg:w-7/12 flex flex-col gap-y-2 items-start  px-8 lg:px-0 lg:pl-4">
         <h2 className="text-2xl xl:text-4xl font-bold text-[#1E1E1E]">
           About Tapres
         </h2>

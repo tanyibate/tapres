@@ -1,9 +1,9 @@
 const propertyList = [
   {
     imgUrl: "/assets/40-carlisle-street/image.jpeg",
-    title: "3 Bedroom House",
+    title: "7 Bedroom HMO",
     description:
-      "This 3 bedroom house is located in the heart of Barrow In Furness. With amenities such as Barrow Park as stone skip away and the train station being nearby.",
+      "This 7 HMO is located in the heart of Barrow In Furness. With amenities such as Barrow Park as stone skip away and the train station being nearby.",
     images: [
       "/assets/40-carlisle-street/image.jpeg",
       "/assets/40-carlisle-street/image2.jpeg",

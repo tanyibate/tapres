@@ -1,6 +1,7 @@
 import Button from "@/components/button/Button";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { sendEmail } from "@/util/email";
 
 const Input = ({
   label,
@@ -42,6 +43,12 @@ export default function Contact() {
     formState: { errors },
   } = useForm();
 
+  const [emailSent, setEmailSent] = useState(false);
+
+  const onEmailSubmit = async () => {
+    setEmailSent(true);
+  };
+
   return (
     <section className="bg-[#1E1E1E] w-full py-16" id="contact-section">
       <div className="w-full max-w-screen-xl px-8 2xl:px-0 mx-auto text-white">
@@ -54,16 +61,6 @@ export default function Contact() {
               Just submit your details and we&apos;ll be in touch shortly.
             </p>
             <div className="space-y-4 mb-8">
-              {/*<div className="flex gap-x-4 items-center">
-                <div className="w-8">
-                  <img
-                    src="/assets/phone-icon.png"
-                    alt=""
-                    className="h-6 md:h-8"
-                  />
-                </div>
-                <span className="md:text-xl font-bold">07648344343</span>
-              </div>*/}
               <div className="flex gap-x-4 items-center">
                 <div className="w-8">
                   <img
@@ -79,7 +76,11 @@ export default function Contact() {
           <div>
             <form
               className="space-y-4"
-              onSubmit={handleSubmit((data) => console.log(data))}
+              onSubmit={handleSubmit(async (data) => {
+                sendEmail(data as any).then(() => {
+                  onEmailSubmit();
+                });
+              })}
             >
               <Input
                 label="name"
@@ -101,7 +102,6 @@ export default function Contact() {
                   label="phoneNumber"
                   register={register}
                   required
-                  pattern={/^\d{10}$/}
                   errorMessage={errors.phoneNumber && "Phone number is invalid"}
                   labelText="Phone Number"
                 />
@@ -126,6 +126,9 @@ export default function Contact() {
                 ></textarea>
               </div>
               <Button white> Send a Request</Button>
+              {emailSent && (
+                <div className="text-green-500">Email sent successfully</div>
+              )}
             </form>
           </div>
         </div>

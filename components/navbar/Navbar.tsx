@@ -3,7 +3,7 @@ import Hamburger from "hamburger-react";
 import styles from "./navbar-styles.module.scss";
 import { useEffect, useState } from "react";
 
-export default function Navbar() {
+export default function Navbar({ route }: { route: string }) {
   const [navbarBackgroundOpacity, setNavbarBackgroundOpacity] = useState(0);
   useEffect(() => {
     const onScroll = (e: any) => {
@@ -28,15 +28,17 @@ export default function Navbar() {
         }}
       ></div>
       <img src="/assets/tapres-logo-transparent.png" alt="" className="w-32" />
-      <ul className="text-white text-xl items-center gap-x-12 hidden xl:flex">
+      <ul className={`text-xl items-center gap-x-12 hidden xl:flex`}>
         {["Home", "About", "Properties", "Invest"].map((item, index) => {
           return (
             <li
-              className="cursor-pointer hover:text-gold"
+              className={`${
+                route === "/" ? "text-white" : "text-black"
+              } "cursor-pointer hover:text-gold"`}
               key={"navbar-item-" + index}
             >
               <a
-                href={`#${
+                href={`/#${
                   item === "Home" ? "landing" : item.toLocaleLowerCase()
                 }-section`}
               >
@@ -48,7 +50,7 @@ export default function Navbar() {
 
         <li className="cursor-pointer">
           <a href="#contact-section">
-            <Button>Contact</Button>
+            <Button white>Contact</Button>
           </a>
         </li>
       </ul>

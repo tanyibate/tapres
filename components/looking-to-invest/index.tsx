@@ -8,9 +8,9 @@ export default function LookingToInvest() {
           Looking to invest
         </div>
         <div className="max-w-[80%] lg:text-lg text-white font-thin">
-          Off the back of an incredibly successful year we're raising a new
+          Off the back of an incredibly successful year we&apos;re raising a new
           funding round to innovate our industry and grow our property portfolio
-          to satisfy the demand we're getting from our current proposals.
+          to satisfy the demand we&apos;re getting from our current proposals.
         </div>
       </div>
     </div>

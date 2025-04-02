@@ -5,80 +5,70 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import Tab from "@/components/ui/Tab";
 import Button from "@/components/button/Button";
-import Link from "next/link";
 import { useRouter } from "next/router";
+import propertyList from "@/components/sections/projects/propertyList";
 
 // Types for our project data
-interface RoomRate {
-  count: number;
-  rate: number;
-}
-
-interface ProjectDetails {
-  status: string;
-  location: string;
-  propertyType: string;
-  tenure: string;
-  currentBedrooms: number;
-  proposedBedrooms: number;
-  currentBathrooms: number;
-  proposedBathrooms: number;
-  occupancyStatus: string;
-  strategy: string;
-}
-
-interface DealBreakdown {
-  purchasePrice: number;
-  gdvEstimated: number;
-  incomeProjection: {
-    roomRates: RoomRate[];
-    totalGrossIncome: number;
-  };
-  costs: {
-    refurbishment: number;
-    sourcingFees: number;
-    totalInvestment: number;
-  };
-  refinance: {
-    gdv: number;
-    ltv: number;
-    mortgageAmount: number;
-    moneyOutSurplus: number;
-  };
-  worksOverview: string[];
-}
-
-interface Comparable {
-  address: string;
-  price: number;
-  valuationType?: string;
-  valuationDate?: string;
-  saleDate?: string;
-  type?: string;
-  dateFound?: string;
-  distance: string;
-}
-
 interface Project {
+  id: number;
   projectTitle: string;
   projectSubtitle: string;
-  projectDetails: ProjectDetails;
-  dealBreakdown: DealBreakdown;
-  valueComparables: Comparable[];
-  rentalComparables: Comparable[];
-  media: {
-    projectPhotos: string[];
-    comparablesPhotos: string[];
-    rentalUnitPhotos: string[];
-    floorplans: {
-      before: string;
-      after: string;
-    };
-    brand: {
-      createdBy: string;
-      logo: string;
-    };
+  projectDetails: {
+    status: string;
+    location: string;
+    propertyType: string;
+    tenure: string;
+    currentBedrooms: number;
+    proposedBedrooms: number;
+    currentBathrooms: number;
+    proposedBathrooms: number;
+    occupancyStatus: string;
+    strategy: string;
   };
+  dealBreakdown: {
+    purchasePrice: number;
+    gdvEstimated: number;
+    incomeProjection: {
+      roomRates: Array<{
+        count: number;
+        rate: number;
+      }>;
+      totalGrossIncome: number;
+    };
+    costs: {
+      refurbishment: number;
+      sourcingFees: number;
+      totalInvestment: number;
+    };
+    refinance: {
+      gdv: number;
+      ltv: number;
+      mortgageAmount: number;
+      moneyOutSurplus: number;
+    };
+    worksOverview: string[];
+  };
+  valueComparables: Array<{
+    address: string;
+    price: number;
+    valuationType?: string;
+    valuationDate?: string;
+    saleDate?: string;
+    distance: string;
+  }>;
+  rentalComparables: Array<{
+    address: string;
+    price: number;
+    type?: string;
+    dateFound?: string;
+    distance: string;
+  }>;
+  imgUrl: string;
+  title: string;
+  description: string;
+  images: string[];
+  floorplans: string[];
+  streetView: string;
 }
 
 interface ProjectPageProps {
@@ -88,7 +78,15 @@ interface ProjectPageProps {
 const ProjectPage = ({ project }: ProjectPageProps) => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState("overview");
-  const tabs = ["overview", "details", "financials", "comparables"];
+  const [currentFloorPlanIndex, setCurrentFloorPlanIndex] = useState(0);
+  const tabs = [
+    "overview",
+    "details",
+    "financials",
+    "comparables",
+    "floorplans",
+    "streetview",
+  ];
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-GB", {
@@ -292,6 +290,108 @@ const ProjectPage = ({ project }: ProjectPageProps) => {
           </div>
         );
 
+      case "floorplans":
+        return (
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-2xl font-semibold mb-6">Floor Plans</h2>
+            <div className="relative">
+              <div className="relative h-[600px] w-full">
+                <Image
+                  src={project.floorplans[currentFloorPlanIndex]}
+                  alt={`Floor plan ${currentFloorPlanIndex + 1}`}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              {project.floorplans.length > 1 && (
+                <>
+                  <button
+                    onClick={() =>
+                      setCurrentFloorPlanIndex((prev) =>
+                        prev === 0 ? project.floorplans.length - 1 : prev - 1
+                      )
+                    }
+                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-md"
+                    aria-label="Previous floor plan"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={() =>
+                      setCurrentFloorPlanIndex((prev) =>
+                        prev === project.floorplans.length - 1 ? 0 : prev + 1
+                      )
+                    }
+                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-md"
+                    aria-label="Next floor plan"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                    {project.floorplans.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentFloorPlanIndex(index)}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          index === currentFloorPlanIndex
+                            ? "bg-gold w-4"
+                            : "bg-gray-300 hover:bg-gray-400"
+                        }`}
+                        aria-label={`Go to floor plan ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          </div>
+        );
+
+      case "streetview":
+        return (
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <h2 className="text-2xl font-semibold mb-6">Street View</h2>
+            <div className="relative h-[600px] w-full">
+              <iframe
+                src={project.streetView}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="rounded-lg"
+              />
+            </div>
+          </div>
+        );
+
       default:
         return null;
     }
@@ -306,12 +406,12 @@ const ProjectPage = ({ project }: ProjectPageProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="min-h-screen bg-gray-50">
+      <main className="min-h-screen bg-gray-50 pt-20">
         {/* Hero Section */}
         <section className="relative h-[40vh] bg-gray-900">
           <div className="absolute inset-0">
             <Image
-              src={`/images/${project.media.projectPhotos[0]}`}
+              src={project.imgUrl}
               alt={project.projectTitle}
               fill
               className="object-cover opacity-50"
@@ -356,107 +456,15 @@ const ProjectPage = ({ project }: ProjectPageProps) => {
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  // In a real application, you would fetch the project data from an API
-  // For now, we'll use the static data
-  const project = {
-    projectTitle: "Investment Opportunity in LA14 Barrow in Furness",
-    projectSubtitle: "BRR Opportunity - Already Purchased",
-    projectDetails: {
-      status: "Development Funds Needed",
-      location: "LA14 Barrow in Furness",
-      propertyType: "Link Detached house",
-      tenure: "Freehold",
-      currentBedrooms: 4,
-      proposedBedrooms: 7,
-      currentBathrooms: 2,
-      proposedBathrooms: 7,
-      occupancyStatus: "Un-Occupied",
-      strategy: "Conversion to HMO and then refinance",
-    },
-    dealBreakdown: {
-      purchasePrice: 125000,
-      gdvEstimated: 480000,
-      incomeProjection: {
-        roomRates: [
-          { count: 3, rate: 670 },
-          { count: 2, rate: 690 },
-          { count: 2, rate: 715 },
-        ],
-        totalGrossIncome: 57900,
-      },
-      costs: {
-        refurbishment: 170000,
-        sourcingFees: 4000,
-        totalInvestment: 299000,
-      },
-      refinance: {
-        gdv: 480000,
-        ltv: 0.75,
-        mortgageAmount: 360000,
-        moneyOutSurplus: 61000,
-      },
-      worksOverview: [
-        "Conversion of workshop into kitchen diner and bedroom",
-        "Conversion of conservatory into bedroom",
-        "Conversion of all bedrooms into ensuite rooms",
-      ],
-    },
-    valueComparables: [
-      {
-        address: "Ramsden Street Terrace",
-        price: 450000,
-        valuationType: "RICS Valuation",
-        valuationDate: "2024-05-04",
-        distance: "0.5 miles",
-      },
-      {
-        address: "Hartingdon Street Terrace",
-        price: 470000,
-        saleDate: "2024-05",
-        distance: "0.2 miles",
-      },
-    ],
-    rentalComparables: [
-      {
-        address: "Victoria Road",
-        price: 800,
-        type: "Double ensuite room",
-        dateFound: "2024-10-19",
-        distance: "0.6 miles",
-      },
-      {
-        address: "Hartingdon Street",
-        price: 715,
-        type: "Double ensuite room",
-        dateFound: "2024-08-08",
-        distance: "0.2 miles",
-      },
-      {
-        address: "Storey Square",
-        price: 690,
-        type: "Double ensuite room",
-        dateFound: "2024-10-12",
-        distance: "0.5 miles",
-      },
-    ],
-    media: {
-      projectPhotos: ["photo_property_1.jpg", "photo_property_2.jpg"],
-      comparablesPhotos: ["photo_comparable_1.jpg", "photo_comparable_2.jpg"],
-      rentalUnitPhotos: [
-        "photo_rental_1.jpg",
-        "photo_rental_2.jpg",
-        "photo_rental_3.jpg",
-      ],
-      floorplans: {
-        before: "floorplan_before.jpg",
-        after: "floorplan_after.jpg",
-      },
-      brand: {
-        createdBy: "TAPRES LTD",
-        logo: "company_logo.jpg",
-      },
-    },
-  };
+  const project = propertyList.find(
+    (project) => project.id === Number(params?.id)
+  );
+
+  if (!project) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {

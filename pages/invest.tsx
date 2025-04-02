@@ -4,7 +4,7 @@ import InvestContact from "@/components/invest-contact";
 
 export default function Invest() {
   return (
-    <main className="w-full pt-[120px] h-full flex flex-col">
+    <main className="w-full pt-20 h-full flex flex-col">
       <LookingToInvest />
       <InvestContact />
       <div className="w-full max-w-screen-xl mx-auto px-4 py-8">

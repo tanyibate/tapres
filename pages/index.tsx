@@ -36,24 +36,29 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {loading && <Loading />}
-      <main className="w-full">
+      <main className="w-full pt-20">
         <Landing />
 
         <Suspense fallback={<div>Loading...</div>}>
           <About />
         </Suspense>
+
         <Suspense fallback={<div>Loading...</div>}>
           <Projects />
         </Suspense>
+
         <Suspense fallback={<div>Loading...</div>}>
           <TeamMembers />
         </Suspense>
+
         <Suspense fallback={<div>Loading...</div>}>
           <Properties />
         </Suspense>
+
         <Suspense fallback={<div>Loading...</div>}>
           <Invest />
         </Suspense>
+
         <Suspense fallback={<div>Loading...</div>}>
           <Contact />
         </Suspense>

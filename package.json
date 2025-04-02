@@ -16,6 +16,7 @@
     "@types/react-dom": "18.0.10",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
+    "framer-motion": "^12.6.3",
     "hamburger-react": "^2.5.0",
     "lightgallery": "^2.7.1",
     "next": "13.1.6",

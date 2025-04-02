@@ -1,91 +1,255 @@
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import investContactBackground from "@/assets/images/invest-background.png";
-import { useForm } from "react-hook-form";
-import Button from "../button/Button";
 
-const Input = ({
-  label,
-  register,
-  required,
-  type = "text",
-  pattern,
-  errorMessage,
-  labelText,
-}: {
-  labelText: string;
-  label: string;
-  register: any;
-  required: boolean;
-  type?: string;
-  pattern?: RegExp;
-  errorMessage?: string;
-}) => (
-  <div className="space-y-1 flex-1">
-    <div className="flex gap-x-2">
-      <label htmlFor={label} className="text-white">
-        {labelText}
-      </label>
-      <div className="text-red-500">{errorMessage}</div>
-    </div>
-    <input
-      type={type}
-      id={label}
-      {...register(label, { required, pattern })}
-      className={`text-sm md:text-lg font-bold text-white ${
-        errorMessage && "border border-red-500 text-red-500"
-      }`}
-    />
-  </div>
-);
+interface Property {
+  id: string;
+  title: string;
+  location: string;
+  investmentAmount: string;
+}
+
+const properties: Property[] = [
+  {
+    id: "la14-barrow",
+    title: "LA14 Barrow in Furness",
+    location: "Barrow-in-Furness, Cumbria",
+    investmentAmount: "£299,000",
+  },
+  {
+    id: "liverpool-hmo",
+    title: "Liverpool HMO",
+    location: "Liverpool, Merseyside",
+    investmentAmount: "£250,000",
+  },
+  {
+    id: "reading-flat",
+    title: "Reading Apartment",
+    location: "Reading, Berkshire",
+    investmentAmount: "£180,000",
+  },
+];
 
 export default function InvestContact() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    propertyId: "",
+    investmentAmount: "",
+    investmentExperience: "",
+    investmentGoals: "",
+    additionalInfo: "",
+    disclaimerAccepted: false,
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!formData.disclaimerAccepted) {
+      alert("Please accept the investment disclaimer to proceed.");
+      return;
+    }
+    // Handle form submission
+    console.log(formData);
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { name, value, type } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]:
+        type === "checkbox" ? (e.target as HTMLInputElement).checked : value,
+    }));
+  };
+
   return (
-    <div className="relative flex-1 overflow-y-scroll">
-      <Image
-        src={investContactBackground}
-        alt="contact background"
-        fill
-        className="h-full w-full object-cover object-center"
-      />
-      <div className="w-full h-full flex flex-col lg:flex-row relative">
-        <div className="bg-[#1e1e1e] opacity-85  w-full h-[75%] lg:w-[55%] lg:h-full relative"></div>
-        <div className="absolute w-full lg:h-full lg:w-1/2 top-0 left-0 flex justify-center items-center">
-          <div className="w-full px-6 py-6">
-            <div className="font-gilroy text-lg lg:text-3xl text-white mb-4">
-              Get In Touch With Us
-            </div>
-            <form
-              className="space-y-4 w-full"
-              onSubmit={handleSubmit((data) => console.log(data))}
-            >
-              <div className="flex w-full flex-col md:flex-row-reverse gap-y-4 md:gap-y-0 md:gap-x-6">
-                <Input
-                  label="name"
-                  register={register}
+    <section className="w-full bg-[#1E1E1E] py-16">
+      <div className="w-full max-w-screen-xl mx-auto px-4">
+        <div className="flex flex-col md:flex-row gap-8">
+          <div className="w-full md:w-1/2">
+            <h2 className="text-2xl xl:text-4xl font-bold text-white mb-4">
+              Get in Touch
+            </h2>
+            <p className="text-gray-300 mb-8">
+              Fill out the form below to start your investment journey with us.
+              We'll get back to you within 24 hours.
+            </p>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-white mb-2">First Name</label>
+                  <input
+                    type="text"
+                    name="firstName"
+                    value={formData.firstName}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded text-white"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-white mb-2">Last Name</label>
+                  <input
+                    type="text"
+                    name="lastName"
+                    value={formData.lastName}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded text-white"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-white mb-2">Email</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded text-white"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-white mb-2">Phone</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded text-white"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-white mb-2">Select Property</label>
+                <select
+                  name="propertyId"
+                  value={formData.propertyId}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded text-white"
                   required
-                  errorMessage={errors.name && "Name is required"}
-                  labelText="Name"
-                />
-                <Input
-                  label="email"
-                  register={register}
+                >
+                  <option value="">Choose a property</option>
+                  {properties.map((property) => (
+                    <option key={property.id} value={property.id}>
+                      {property.title} - {property.location} (
+                      {property.investmentAmount})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-white mb-2">
+                  Investment Amount
+                </label>
+                <input
+                  type="text"
+                  name="investmentAmount"
+                  value={formData.investmentAmount}
+                  onChange={handleChange}
+                  placeholder="Enter your investment amount"
+                  className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded text-white"
                   required
-                  type="email"
-                  errorMessage={errors.Email && "Email is required"}
-                  labelText="Email"
                 />
               </div>
-              <Button white>Enquire Now</Button>
+
+              <div>
+                <label className="block text-white mb-2">
+                  Investment Experience
+                </label>
+                <select
+                  name="investmentExperience"
+                  value={formData.investmentExperience}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded text-white"
+                  required
+                >
+                  <option value="">Select your experience level</option>
+                  <option value="beginner">Beginner</option>
+                  <option value="intermediate">Intermediate</option>
+                  <option value="experienced">Experienced</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-white mb-2">
+                  Investment Goals
+                </label>
+                <select
+                  name="investmentGoals"
+                  value={formData.investmentGoals}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded text-white"
+                  required
+                >
+                  <option value="">Select your investment goals</option>
+                  <option value="long-term">Long-term capital growth</option>
+                  <option value="income">Regular rental income</option>
+                  <option value="both">Both capital growth and income</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-white mb-2">
+                  Additional Information
+                </label>
+                <textarea
+                  name="additionalInfo"
+                  value={formData.additionalInfo}
+                  onChange={handleChange}
+                  rows={4}
+                  placeholder="Tell us about your investment preferences or any questions you have"
+                  className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded text-white"
+                />
+              </div>
+
+              <div className="flex items-start space-x-3">
+                <input
+                  type="checkbox"
+                  name="disclaimerAccepted"
+                  checked={formData.disclaimerAccepted}
+                  onChange={handleChange}
+                  className="mt-1 h-4 w-4 rounded border-gray-300 text-[#B69A3E] focus:ring-[#B69A3E]"
+                  required
+                />
+                <label className="text-sm text-gray-300">
+                  I have read and understood the investment disclaimer at the
+                  bottom of the page. I acknowledge that property investment
+                  involves risks and I accept these risks.
+                </label>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-[#B69A3E] text-white py-3 rounded hover:bg-[#A0882E] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled={!formData.disclaimerAccepted}
+              >
+                Submit Investment Interest
+              </button>
             </form>
+          </div>
+          <div className="w-full md:w-1/2 relative">
+            <Image
+              src={investContactBackground}
+              alt="Investment Contact"
+              className="rounded-lg"
+              fill
+              style={{ objectFit: "cover" }}
+            />
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

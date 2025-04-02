@@ -2,8 +2,11 @@ import Button from "@/components/button/Button";
 import Image from "next/image";
 import React from "react";
 import investImage from "@/assets/images/invest-image.jpg";
+import { useRouter } from "next/router";
 
 export default function Invest() {
+  const router = useRouter();
+
   return (
     <section
       className="w-full flex flex-col  items-center justify-center md:flex-row max-w-screen-xl mx-auto py-16 gap-y-12"
@@ -24,7 +27,11 @@ export default function Invest() {
             their capital.
           </p>
         </div>
-        <Button white>Know More</Button>
+        <div className="mt-8">
+          <Button white onClick={() => router.push("/invest")}>
+            Invest Now
+          </Button>
+        </div>
       </div>
       <div className="w-full md:flex-1 pl-8 md:pl-0 relative block min-h-full">
         <Image src={investImage} alt="" className="w-full" />

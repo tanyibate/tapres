@@ -33,8 +33,11 @@ export default function PropertyCard({
       </div>
       <div className="w-full flex justify-start">
         {href ? (
-          <a href={href}>
-            <Button white>{price}</Button>
+          <a
+            href={href}
+            className="inline-block px-3 py-2 bg-black text-white hover:bg-gray-800 transition-colors rounded"
+          >
+            {price}
           </a>
         ) : (
           <Button white>{price}</Button>

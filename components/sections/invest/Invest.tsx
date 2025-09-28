@@ -28,9 +28,9 @@ export default function Invest() {
           </p>
         </div>
         <div className="mt-8">
-          <Button white onClick={() => router.push("/invest")}>
-            Invest Now
-          </Button>
+          <a href="/invest">
+            <Button white>Invest Now</Button>
+          </a>
         </div>
       </div>
       <div className="w-full md:flex-1 pl-8 md:pl-0 relative block min-h-full">

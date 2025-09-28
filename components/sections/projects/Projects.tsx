@@ -88,6 +88,7 @@ export default function Projects() {
                       ...property,
                       price: "Invest Now",
                       openGallery: () => selectProperty(index),
+                      href: "/invest",
                     }}
                   />
                 </div>

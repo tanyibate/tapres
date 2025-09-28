@@ -40,8 +40,8 @@ export default function Navbar({ route }: { route: string }) {
           })}
 
           <li className="cursor-pointer">
-            <a href="#contact-section">
-              <Button white={route === "/"}>Contact</Button>
+            <a href="/#contact-section">
+              <Button white>Contact</Button>
             </a>
           </li>
         </ul>

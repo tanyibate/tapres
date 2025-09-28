@@ -82,20 +82,20 @@ const propertyList = [
       },
     ],
 
-    imgUrl: "/assets/40-carlisle-street/image.jpeg",
+    imgUrl: "/assets/40-carlisle-street/prerefurb.jpeg",
     title: "7 Bedroom HMO",
     description:
       "This 7 HMO is located in the heart of Barrow In Furness. With amenities such as Barrow Park as stone skip away and the train station being nearby.",
     images: [
-      "/assets/40-carlisle-street/image.jpeg",
-      "/assets/40-carlisle-street/image2.jpeg",
-      "/assets/40-carlisle-street/image3.jpeg",
-      "/assets/40-carlisle-street/image4.jpeg",
+      "/assets/40-carlisle-street/prerefurb.jpeg",
+      "/assets/40-carlisle-street/prerefurb2.jpeg",
+      "/assets/40-carlisle-street/prerefurb3.jpeg",
+      "/assets/40-carlisle-street/prerefurb4.jpeg",
     ],
     floorplans: [
-      "/assets/40-carlisle-street/image5.jpeg",
-      "/assets/40-carlisle-street/image6.jpeg",
-      "/assets/40-carlisle-street/image7.jpeg",
+      "/assets/40-carlisle-street/floorplan.jpeg",
+      "/assets/40-carlisle-street/floorplan2.jpeg",
+      "/assets/40-carlisle-street/floorplan3.jpeg",
     ],
     streetView:
       "https://www.google.com/maps/embed?pb=!4v1724946578349!6m8!1m7!1sG_m8nj_Ii6VvI1chKF4z5w!2m2!1d54.11617847240131!2d-3.225370926743238!3f103.46257856473689!4f-2.9831352707828387!5f0.7820865974627469",
@@ -182,23 +182,17 @@ const propertyList = [
         distance: "0.2 Miles",
       },
     ],
-    imgUrl: "photo_property_main.jpg",
+    imgUrl: "/assets/77-carlisle-street/kitchen-diner/DSC_5791-HDR-Edit.jpg",
     title: "BRR Opportunity in Goole - 6 Bed HMO Conversion",
     description:
       "End terrace property in DN14, Goole. Opportunity to convert to a 6-bed all ensuite HMO. Strong comparable sales and rental data. Fully funded and purchased. Seeking development funds.",
     images: [
-      "photo_property_1.jpg",
-      "photo_property_2.jpg",
-      "photo_rental_1.jpg",
-      "photo_rental_2.jpg",
-      "photo_rental_3.jpg",
+      "/assets/77-carlisle-street/room-1/DSC_5714-Edit.jpg",
+      "/assets/77-carlisle-street/room-2/DSC_5732-Edit.jpg",
+      "/assets/77-carlisle-street/room-3/DSC_5697-Edit.jpg",
+      "/assets/77-carlisle-street/kitchen-diner/DSC_5791-HDR-Edit.jpg",
     ],
-    floorplans: [
-      "floorplan_ground_before.jpg",
-      "floorplan_ground_after.jpg",
-      "floorplan_first_before.jpg",
-      "floorplan_first_after.jpg",
-    ],
+    floorplans: ["/assets/77-carlisle-street/layout.jpg"],
     streetView: "https://maps.google.com/?q=DN14+Goole+UK",
   },
 ];

@@ -1,5 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 type Data = {
   data?: unknown;
@@ -14,30 +16,21 @@ export default async function handler(
   if (req.method === "POST") {
     const { name, email, message } = req.body;
 
-    // Create a transporter object using the default SMTP transport
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT),
-      secure: Number(process.env.SMTP_PORT) === 465, // true for 465, false for other ports
-      auth: {
-        user: process.env.SMTP_USERNAME, // SMTP username
-        pass: process.env.SMTP_PASSWORD, // SMTP password
-      },
-    } as nodemailer.TransportOptions);
-
     try {
-      // Send mail with defined transport object
-      await transporter.sendMail({
-        from: process.env.SMTP_USERNAME, // sender address
-        to: process.env.INFO_EMAIL, // list of receivers (your email)
-        subject: `Contact submission from ${name} ${email}`, // Subject line
+      // Send email using Resend
+      const data = await resend.emails.send({
+        from: process.env.FROM_EMAIL || "onboarding@resend.dev", // sender address
+        to: [process.env.INFO_EMAIL!], // list of receivers (your email)
+        subject: `Contact submission from ${name} (${email})`, // Subject line
         text: message, // plain text body
+        replyTo: email, // Allow replies to go back to the sender
       });
 
       return res.status(200).json({
         status: "success",
         data: {
           message: "Email sent successfully",
+          emailId: data.data?.id,
         },
       });
     } catch (error) {

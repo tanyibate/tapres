@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import investContactBackground from "@/assets/images/invest-background.png";
+import { sendEmail } from "@/util/email";
 
 interface Property {
   id: string;
@@ -43,6 +44,7 @@ export default function InvestContact() {
     additionalInfo: "",
     disclaimerAccepted: false,
   });
+  const [emailSent, setEmailSent] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -51,7 +53,36 @@ export default function InvestContact() {
       return;
     }
     // Handle form submission
-    console.log(formData);
+    sendEmail({
+      name: formData.firstName + " " + formData.lastName,
+      message: `
+      First Name: ${formData.firstName}
+      Last Name: ${formData.lastName}
+      Email: ${formData.email}
+      Phone: ${formData.phone}
+      Property ID: ${formData.propertyId}
+      Investment Amount: ${formData.investmentAmount}
+      Investment Experience: ${formData.investmentExperience}
+      Investment Goals: ${formData.investmentGoals}
+      Additional Information: ${formData.additionalInfo}
+      `,
+      email: formData.email,
+    }).then(() => {
+      // clear the form
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        propertyId: "",
+        investmentAmount: "",
+        investmentExperience: "",
+        investmentGoals: "",
+        additionalInfo: "",
+        disclaimerAccepted: false,
+      });
+      setEmailSent(true);
+    });
   };
 
   const handleChange = (
@@ -77,7 +108,7 @@ export default function InvestContact() {
             </h2>
             <p className="text-gray-300 mb-8">
               Fill out the form below to start your investment journey with us.
-              We'll get back to you within 24 hours.
+              We&apos;ll get back to you within 24 hours.
             </p>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -234,9 +265,13 @@ export default function InvestContact() {
                 type="submit"
                 className="w-full bg-[#B69A3E] text-white py-3 rounded hover:bg-[#A0882E] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={!formData.disclaimerAccepted}
+                onSubmit={handleSubmit}
               >
                 Submit Investment Interest
               </button>
+              {emailSent && (
+                <div className="text-green-500">Email sent successfully</div>
+              )}
             </form>
           </div>
           <div className="w-full md:w-1/2 relative">

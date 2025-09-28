@@ -8,12 +8,14 @@ export default function PropertyCard({
   description,
   price,
   openGallery,
+  href,
 }: {
   imgUrl: string;
   title: string;
   description: string;
   price: string;
   openGallery?: () => void;
+  href?: string;
 }) {
   return (
     <div className="relative w-56 sm:w-64 large-tablet:w-60 md:w-80 lg:w-[325px] xl:w-96 px-[2.5%] py-[3%] flex flex-col items-center  border border-[#DCDCDC] border-solid rounded-lg large-tablet:mx-auto bg-white">
@@ -30,7 +32,13 @@ export default function PropertyCard({
         <p className="text-black text-[10px] md:text-sm mb-4">{description}</p>
       </div>
       <div className="w-full flex justify-start">
-        <Button white>{price}</Button>
+        {href ? (
+          <a href={href}>
+            <Button white>{price}</Button>
+          </a>
+        ) : (
+          <Button white>{price}</Button>
+        )}
       </div>
     </div>
   );

@@ -3,14 +3,22 @@ import Button from "../button/Button";
 import styles from "./mobile-menu-styles.module.scss";
 import Link from "next/link";
 
+interface NavLink {
+  label: string;
+  href: string;
+  isButton?: boolean;
+  isExternal?: boolean;
+}
+
 interface MobileMenuProps {
   isOpen: boolean;
   onClose: () => void;
   route: string;
+  navLinks?: NavLink[];
 }
 
-const MobileMenu = ({ isOpen, onClose, route }: MobileMenuProps) => {
-  const menuItems = ["Home", "About", "Properties", "Invest", "Contact"];
+const MobileMenu = ({ isOpen, onClose, route, navLinks }: MobileMenuProps) => {
+  const links = navLinks || [];
 
   return (
     <AnimatePresence>
@@ -23,30 +31,28 @@ const MobileMenu = ({ isOpen, onClose, route }: MobileMenuProps) => {
         >
           <div className="h-full flex flex-col justify-center items-center">
             <nav className="flex flex-col items-center space-y-8">
-              {menuItems.map((item, index) => (
+              {links.map((link, index) => (
                 <motion.div
-                  key={item}
+                  key={link.label}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                 >
-                  {item === "Invest" ? (
+                  {link.isExternal || link.href.startsWith("/") && !link.href.startsWith("/#") ? (
                     <Link
-                      href="/invest"
+                      href={link.href}
                       className="text-2xl text-white hover:text-gold transition-colors"
                       onClick={onClose}
                     >
-                      {item}
+                      {link.label}
                     </Link>
                   ) : (
                     <a
-                      href={`/#${
-                        item === "Home" ? "landing" : item.toLowerCase()
-                      }-section`}
+                      href={link.href}
                       className="text-2xl text-white hover:text-gold transition-colors"
                       onClick={onClose}
                     >
-                      {item}
+                      {link.label}
                     </a>
                   )}
                 </motion.div>

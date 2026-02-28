@@ -4,9 +4,34 @@ import styles from "./navbar-styles.module.scss";
 import { useState } from "react";
 import MobileMenu from "../mobile-menu/MobileMenu";
 import Image from "next/image";
+import { urlFor } from "@/sanity/lib/client";
 
-export default function Navbar({ route }: { route: string }) {
+interface NavLink {
+  label: string;
+  href: string;
+  isButton?: boolean;
+  isExternal?: boolean;
+}
+
+interface NavData {
+  logo?: any;
+  navLinks?: NavLink[];
+}
+
+export default function Navbar({
+  route,
+  navData,
+}: {
+  route: string;
+  navData?: NavData | null;
+}) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const logoSrc = navData?.logo
+    ? urlFor(navData.logo).width(192).url()
+    : "";
+
+  const links = navData?.navLinks || [];
 
   return (
     <>
@@ -17,39 +42,41 @@ export default function Navbar({ route }: { route: string }) {
             : "bg-white/80 backdrop-blur-md border-b border-black/10"
         }`}
       >
-        <Image
-          src="/assets/tapres-logo-transparent.png"
-          alt="Tapres Logo"
-          width={96}
-          height={40}
-          className="w-24"
-          priority
-        />
+        {typeof logoSrc === "string" && logoSrc.startsWith("http") ? (
+          <img src={logoSrc} alt="Tapres Logo" className="w-24 h-auto" />
+        ) : (
+          <Image
+            src={logoSrc}
+            alt="Tapres Logo"
+            width={96}
+            height={40}
+            className="w-24"
+            priority
+          />
+        )}
         <ul className={`text-lg items-center gap-x-12 hidden xl:flex`}>
-          {["Home", "About", "Properties", "Invest"].map((item, index) => {
-            return (
+          {links
+            .filter((link) => !link.isButton)
+            .map((link, index) => (
               <li
                 className={`${
                   route === "/" ? "text-white" : "text-black"
                 } cursor-pointer hover:text-gold transition-colors duration-200`}
                 key={"navbar-item-" + index}
               >
-                <a
-                  href={`/#${
-                    item === "Home" ? "landing" : item.toLocaleLowerCase()
-                  }-section`}
-                >
-                  {item}
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))}
+
+          {links
+            .filter((link) => link.isButton)
+            .map((link, index) => (
+              <li className="cursor-pointer" key={"navbar-btn-" + index}>
+                <a href={link.href}>
+                  <Button white>{link.label}</Button>
                 </a>
               </li>
-            );
-          })}
-
-          <li className="cursor-pointer">
-            <a href="/#contact-section">
-              <Button white>Contact</Button>
-            </a>
-          </li>
+            ))}
         </ul>
         <div className="xl:hidden">
           <Hamburger
@@ -65,6 +92,7 @@ export default function Navbar({ route }: { route: string }) {
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
         route={route}
+        navLinks={links}
       />
     </>
   );

@@ -1,6 +1,17 @@
 import React from "react";
 
-export default function About() {
+interface AboutProps {
+  data?: any;
+}
+
+export default function About({ data }: AboutProps) {
+  const heading = data?.heading || "";
+  const bodyText = data?.bodyText || "";
+  const mission = data?.mission || { title: "", text: "" };
+  const values = data?.values || { title: "", text: "" };
+  const vision = data?.vision || { title: "", text: "" };
+  const youtubeUrl = data?.youtubeUrl || "";
+
   return (
     <section
       className="w-full flex flex-col-reverse lg:flex-row xl:justify-between py-16 max-w-screen-xl max-h-fit mx-auto gap-y-4 lg:gap-y-0 lg:px-8 2xl:px-0"
@@ -8,7 +19,7 @@ export default function About() {
     >
       <div className="w-full lg:w-5/12  relative">
         <iframe
-          src="https://www.youtube.com/embed/2Mj7CIla3L4"
+          src={youtubeUrl}
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -18,40 +29,21 @@ export default function About() {
       </div>
       <div className="w-full lg:w-7/12 flex flex-col gap-y-4 items-start px-8 lg:px-0 lg:pl-4">
         <h2 className="text-2xl xl:text-4xl font-bold text-[#1E1E1E] after:content-[''] after:block after:w-16 after:h-1 after:bg-gold after:mt-2">
-          About Tapres
+          {heading}
         </h2>
         <div className="text-lg text-[#3A3A3A] space-y-4">
-          <p>
-            Tapres limited was founded in 2022 with the mission to provide
-            Houses of Multiple Occupancy (HMO&apos;s) to professional by buying,
-            renovate, re-mortgage and rent using investor&apos;s money and bridging
-            loans. We also provide home away from home by providing high quality
-            Serviced accommodation(SA).
-          </p>
+          <p>{bodyText}</p>
           <div>
-            <strong>Our Mission</strong>
-            <p>
-              To use high professional approach to supply quality next
-              generation properties to tenants and investors, setting high
-              standards across the property industry. We go the extra mile to
-              make our tenants feel valued.
-            </p>
+            <strong>{mission.title}</strong>
+            <p>{mission.text}</p>
           </div>
           <div>
-            <strong>Our Values</strong>
-            <p>
-              Tenants are primary focus of that we do. We are honest,
-              Trustworthy, transparent and respectful in providing high quality
-              property to our customers.
-            </p>
+            <strong>{values.title}</strong>
+            <p>{values.text}</p>
           </div>
           <div>
-            <strong>Our Vision</strong>
-            <p>
-              Our vision is to provide high quality property to tenants
-              worldwide irrespective of nationality, culture, class or
-              education.
-            </p>
+            <strong>{vision.title}</strong>
+            <p>{vision.text}</p>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { GetServerSideProps } from "next";
+import { GetStaticProps, GetStaticPaths } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import Image from "next/image";
@@ -6,73 +6,14 @@ import { motion } from "framer-motion";
 import Tab from "@/components/ui/Tab";
 import Button from "@/components/button/Button";
 import { useRouter } from "next/router";
-import propertyList from "@/components/sections/projects/propertyList";
-
-// Types for our project data
-interface Project {
-  id: number;
-  projectTitle: string;
-  projectSubtitle: string;
-  projectDetails: {
-    status: string;
-    location: string;
-    propertyType: string;
-    tenure: string;
-    currentBedrooms: number;
-    proposedBedrooms: number;
-    currentBathrooms: number;
-    proposedBathrooms: number;
-    occupancyStatus: string;
-    strategy: string;
-  };
-  dealBreakdown: {
-    purchasePrice: number;
-    gdvEstimated: number;
-    incomeProjection: {
-      roomRates: Array<{
-        count: number;
-        rate: number;
-      }>;
-      totalGrossIncome: number;
-    };
-    costs: {
-      refurbishment: number;
-      sourcingFees: number;
-      totalInvestment: number;
-    };
-    refinance: {
-      gdv: number;
-      ltv: number;
-      mortgageAmount: number;
-      moneyOutSurplus: number;
-    };
-    worksOverview: string[];
-  };
-  valueComparables: Array<{
-    address: string;
-    price: number;
-    valuationType?: string;
-    valuationDate?: string;
-    saleDate?: string;
-    distance: string;
-  }>;
-  rentalComparables: Array<{
-    address: string;
-    price: number;
-    type?: string;
-    dateFound?: string;
-    distance: string;
-  }>;
-  imgUrl: string;
-  title: string;
-  description: string;
-  images: string[];
-  floorplans: string[];
-  streetView: string;
-}
+import { client, urlFor } from "@/sanity/lib/client";
+import {
+  projectBySlugQuery,
+  allProjectSlugsQuery,
+} from "@/sanity/queries";
 
 interface ProjectPageProps {
-  project: Project;
+  project: any;
 }
 
 const ProjectPage = ({ project }: ProjectPageProps) => {
@@ -95,12 +36,33 @@ const ProjectPage = ({ project }: ProjectPageProps) => {
     }).format(amount);
   };
 
+  if (router.isFallback) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-gold border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  const mainImageUrl = project.mainImage
+    ? urlFor(project.mainImage).width(1920).url()
+    : "";
+
+  const galleryImages =
+    project.images?.map((img: any) =>
+      typeof img === "string" ? img : urlFor(img).width(1280).url()
+    ) || [];
+
+  const floorplanImages =
+    project.floorplans?.map((img: any) =>
+      typeof img === "string" ? img : urlFor(img).width(1280).url()
+    ) || [];
+
   const renderTabContent = () => {
     switch (activeTab) {
       case "overview":
         return (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Project Details Card */}
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h2 className="text-2xl font-semibold mb-4">Project Details</h2>
               <div className="space-y-4">
@@ -133,7 +95,6 @@ const ProjectPage = ({ project }: ProjectPageProps) => {
               </div>
             </div>
 
-            {/* Financial Summary Card */}
             <div className="bg-white rounded-lg shadow-sm p-6">
               <h2 className="text-2xl font-semibold mb-4">Financial Summary</h2>
               <div className="space-y-4">
@@ -202,7 +163,9 @@ const ProjectPage = ({ project }: ProjectPageProps) => {
       case "financials":
         return (
           <div className="bg-white rounded-lg shadow-sm p-6">
-            <h2 className="text-2xl font-semibold mb-6">Financial Breakdown</h2>
+            <h2 className="text-2xl font-semibold mb-6">
+              Financial Breakdown
+            </h2>
             <div className="space-y-6">
               <div>
                 <h3 className="text-lg font-medium mb-4">Income Projection</h3>
@@ -216,7 +179,7 @@ const ProjectPage = ({ project }: ProjectPageProps) => {
                   <div className="mt-2">
                     <p className="font-medium">Room Rates:</p>
                     {project.dealBreakdown.incomeProjection.roomRates.map(
-                      (rate, index) => (
+                      (rate: any, index: number) => (
                         <p key={index}>
                           {rate.count} rooms at {formatCurrency(rate.rate)} each
                         </p>
@@ -252,19 +215,23 @@ const ProjectPage = ({ project }: ProjectPageProps) => {
         return (
           <div className="space-y-6">
             <div className="bg-white rounded-lg shadow-sm p-6">
-              <h2 className="text-2xl font-semibold mb-6">Value Comparables</h2>
+              <h2 className="text-2xl font-semibold mb-6">
+                Value Comparables
+              </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {project.valueComparables.map((comparable, index) => (
-                  <div key={index} className="border rounded-lg p-4">
-                    <p className="font-medium">{comparable.address}</p>
-                    <p className="text-gray-600">
-                      {formatCurrency(comparable.price)}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      {comparable.distance} away
-                    </p>
-                  </div>
-                ))}
+                {project.valueComparables?.map(
+                  (comparable: any, index: number) => (
+                    <div key={index} className="border rounded-lg p-4">
+                      <p className="font-medium">{comparable.address}</p>
+                      <p className="text-gray-600">
+                        {formatCurrency(comparable.price)}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {comparable.distance} away
+                      </p>
+                    </div>
+                  )
+                )}
               </div>
             </div>
 
@@ -273,18 +240,22 @@ const ProjectPage = ({ project }: ProjectPageProps) => {
                 Rental Comparables
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {project.rentalComparables.map((comparable, index) => (
-                  <div key={index} className="border rounded-lg p-4">
-                    <p className="font-medium">{comparable.address}</p>
-                    <p className="text-gray-600">
-                      {formatCurrency(comparable.price)}
-                    </p>
-                    <p className="text-sm text-gray-500">{comparable.type}</p>
-                    <p className="text-sm text-gray-500">
-                      {comparable.distance} away
-                    </p>
-                  </div>
-                ))}
+                {project.rentalComparables?.map(
+                  (comparable: any, index: number) => (
+                    <div key={index} className="border rounded-lg p-4">
+                      <p className="font-medium">{comparable.address}</p>
+                      <p className="text-gray-600">
+                        {formatCurrency(comparable.price)}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {comparable.type}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {comparable.distance} away
+                      </p>
+                    </div>
+                  )
+                )}
               </div>
             </div>
           </div>
@@ -294,82 +265,90 @@ const ProjectPage = ({ project }: ProjectPageProps) => {
         return (
           <div className="bg-white rounded-lg shadow-sm p-6">
             <h2 className="text-2xl font-semibold mb-6">Floor Plans</h2>
-            <div className="relative">
-              <div className="relative h-[600px] w-full">
-                <Image
-                  src={project.floorplans[currentFloorPlanIndex]}
-                  alt={`Floor plan ${currentFloorPlanIndex + 1}`}
-                  fill
-                  className="object-contain"
-                />
+            {floorplanImages.length > 0 ? (
+              <div className="relative">
+                <div className="relative h-[600px] w-full">
+                  <Image
+                    src={floorplanImages[currentFloorPlanIndex]}
+                    alt={`Floor plan ${currentFloorPlanIndex + 1}`}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+                {floorplanImages.length > 1 && (
+                  <>
+                    <button
+                      onClick={() =>
+                        setCurrentFloorPlanIndex((prev) =>
+                          prev === 0
+                            ? floorplanImages.length - 1
+                            : prev - 1
+                        )
+                      }
+                      className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-md"
+                      aria-label="Previous floor plan"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 19l-7-7 7-7"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() =>
+                        setCurrentFloorPlanIndex((prev) =>
+                          prev === floorplanImages.length - 1
+                            ? 0
+                            : prev + 1
+                        )
+                      }
+                      className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-md"
+                      aria-label="Next floor plan"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </button>
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                      {floorplanImages.map((_: any, index: number) => (
+                        <button
+                          key={index}
+                          onClick={() => setCurrentFloorPlanIndex(index)}
+                          className={`w-2 h-2 rounded-full transition-all ${
+                            index === currentFloorPlanIndex
+                              ? "bg-gold w-4"
+                              : "bg-gray-300 hover:bg-gray-400"
+                          }`}
+                          aria-label={`Go to floor plan ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
-              {project.floorplans.length > 1 && (
-                <>
-                  <button
-                    onClick={() =>
-                      setCurrentFloorPlanIndex((prev) =>
-                        prev === 0 ? project.floorplans.length - 1 : prev - 1
-                      )
-                    }
-                    className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-md"
-                    aria-label="Previous floor plan"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M15 19l-7-7 7-7"
-                      />
-                    </svg>
-                  </button>
-                  <button
-                    onClick={() =>
-                      setCurrentFloorPlanIndex((prev) =>
-                        prev === project.floorplans.length - 1 ? 0 : prev + 1
-                      )
-                    }
-                    className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-md"
-                    aria-label="Next floor plan"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 5l7 7-7 7"
-                      />
-                    </svg>
-                  </button>
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                    {project.floorplans.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentFloorPlanIndex(index)}
-                        className={`w-2 h-2 rounded-full transition-all ${
-                          index === currentFloorPlanIndex
-                            ? "bg-gold w-4"
-                            : "bg-gray-300 hover:bg-gray-400"
-                        }`}
-                        aria-label={`Go to floor plan ${index + 1}`}
-                      />
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
+            ) : (
+              <p className="text-gray-500">No floor plans available.</p>
+            )}
           </div>
         );
 
@@ -379,7 +358,7 @@ const ProjectPage = ({ project }: ProjectPageProps) => {
             <h2 className="text-2xl font-semibold mb-6">Street View</h2>
             <div className="relative h-[600px] w-full">
               <iframe
-                src={project.streetView}
+                src={project.streetViewUrl}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -407,11 +386,10 @@ const ProjectPage = ({ project }: ProjectPageProps) => {
       </Head>
 
       <main className="min-h-screen bg-gray-50 pt-20">
-        {/* Hero Section */}
         <section className="relative h-[40vh] bg-gray-900">
           <div className="absolute inset-0">
             <Image
-              src={project.imgUrl}
+              src={mainImageUrl}
               alt={project.projectTitle}
               fill
               className="object-cover opacity-50"
@@ -440,7 +418,12 @@ const ProjectPage = ({ project }: ProjectPageProps) => {
               transition={{ delay: 0.2 }}
               className="mt-8"
             >
-              <Button white onClick={() => router.replace(`/invest?projectId=${project.id}`)}>
+              <Button
+                white
+                onClick={() =>
+                  router.replace(`/invest?projectSlug=${project.slug}`)
+                }
+              >
                 Invest Now
               </Button>
             </motion.div>
@@ -455,21 +438,26 @@ const ProjectPage = ({ project }: ProjectPageProps) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  const project = propertyList.find(
-    (project) => project.id === Number(params?.id)
-  );
+export const getStaticPaths: GetStaticPaths = async () => {
+  const slugs = await client.fetch(allProjectSlugsQuery);
+  const paths = slugs.map((s: { slug: string }) => ({
+    params: { slug: s.slug },
+  }));
+  return { paths, fallback: true };
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const project = await client.fetch(projectBySlugQuery, {
+    slug: params?.slug,
+  });
 
   if (!project) {
-    return {
-      notFound: true,
-    };
+    return { notFound: true };
   }
 
   return {
-    props: {
-      project,
-    },
+    props: { project },
+    revalidate: 60,
   };
 };
 

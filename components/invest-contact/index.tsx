@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { sendEmail } from "@/util/email";
-import propertyList from "@/components/sections/projects/propertyList";
+import { PortableText } from "@portabletext/react";
+import { urlFor } from "@/sanity/lib/client";
 
 const formatCurrency = (amount: number) => {
   return new Intl.NumberFormat("en-GB", {
@@ -9,13 +10,6 @@ const formatCurrency = (amount: number) => {
     currency: "GBP",
   }).format(amount);
 };
-
-const properties = propertyList.map((project: any) => ({
-  id: String(project.id),
-  title: project.title,
-  location: project.projectDetails.location,
-  investmentAmount: formatCurrency(project.dealBreakdown.costs.totalInvestment),
-}));
 
 const inputClasses =
   "w-full px-4 py-2 bg-white/10 border border-white/20 rounded text-white focus:ring-2 focus:ring-gold focus:outline-none transition-all duration-200";
@@ -25,10 +19,18 @@ const selectClasses =
 
 interface InvestContactProps {
   project?: any;
+  projects?: any[];
+  formData?: any;
 }
 
-/* ─── Project Details Panel (shared between desktop sidebar & mobile drawer) ─── */
+/* --- Project Details Panel (shared between desktop sidebar & mobile drawer) --- */
 function ProjectDetailsPanel({ project }: { project: any }) {
+  const getImageUrl = (img: any) => {
+    if (typeof img === "string") return img;
+    if (img?.asset) return urlFor(img).width(400).url();
+    return "";
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -45,29 +47,37 @@ function ProjectDetailsPanel({ project }: { project: any }) {
       {/* Image thumbnails */}
       {project.images?.length > 0 && (
         <div className="flex gap-3 overflow-x-auto pb-2">
-          {project.images.map((img: string, i: number) => (
-            <div
-              key={i}
-              className="relative w-36 h-24 flex-shrink-0 rounded-lg overflow-hidden"
-            >
-              <Image
-                src={img}
-                alt={`${project.title} image ${i + 1}`}
-                fill
-                className="object-cover"
-              />
-            </div>
-          ))}
+          {project.images.map((img: any, i: number) => {
+            const src = getImageUrl(img);
+            return (
+              <div
+                key={i}
+                className="relative w-36 h-24 flex-shrink-0 rounded-lg overflow-hidden"
+              >
+                {src ? (
+                  <Image
+                    src={src}
+                    alt={`${project.title} image ${i + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                ) : null}
+              </div>
+            );
+          })}
         </div>
       )}
 
       {/* Key details grid */}
       <div className="grid grid-cols-2 gap-3">
         {[
-          { label: "Location", value: project.projectDetails.location },
-          { label: "Property Type", value: project.projectDetails.propertyType },
-          { label: "Tenure", value: project.projectDetails.tenure },
-          { label: "Strategy", value: project.projectDetails.strategy },
+          { label: "Location", value: project.projectDetails?.location },
+          {
+            label: "Property Type",
+            value: project.projectDetails?.propertyType,
+          },
+          { label: "Tenure", value: project.projectDetails?.tenure },
+          { label: "Strategy", value: project.projectDetails?.strategy },
         ].map((item) => (
           <div key={item.label} className="bg-white/5 rounded-lg p-3">
             <p className="text-xs text-gray-400">{item.label}</p>
@@ -81,19 +91,21 @@ function ProjectDetailsPanel({ project }: { project: any }) {
         {[
           {
             label: "Purchase Price",
-            value: formatCurrency(project.dealBreakdown.purchasePrice),
+            value: formatCurrency(project.dealBreakdown?.purchasePrice || 0),
           },
           {
             label: "GDV (Estimated)",
-            value: formatCurrency(project.dealBreakdown.gdvEstimated),
+            value: formatCurrency(project.dealBreakdown?.gdvEstimated || 0),
           },
           {
             label: "Total Investment",
-            value: formatCurrency(project.dealBreakdown.costs.totalInvestment),
+            value: formatCurrency(
+              project.dealBreakdown?.costs?.totalInvestment || 0
+            ),
           },
           {
             label: "Projected Gross Income",
-            value: `${formatCurrency(project.dealBreakdown.incomeProjection.totalGrossIncome)}/yr`,
+            value: `${formatCurrency(project.dealBreakdown?.incomeProjection?.totalGrossIncome || 0)}/yr`,
           },
         ].map((item) => (
           <div key={item.label} className="bg-white/5 rounded-lg p-3">
@@ -106,74 +118,84 @@ function ProjectDetailsPanel({ project }: { project: any }) {
   );
 }
 
-/* ─── Disclaimer Modal ─── */
+/* --- Disclaimer Modal --- */
 function DisclaimerModal({
   open,
   onClose,
   onAccept,
+  cmsData,
 }: {
   open: boolean;
   onClose: () => void;
   onAccept: () => void;
+  cmsData?: any;
 }) {
   const [checked, setChecked] = useState(false);
 
-  // Reset checkbox each time the modal opens
   useEffect(() => {
     if (open) setChecked(false);
   }, [open]);
 
   if (!open) return null;
 
+  const title = cmsData?.disclaimerTitle || "Investment Disclaimer";
+  const checkboxLabel =
+    cmsData?.disclaimerCheckboxLabel ||
+    "I have read and understood the investment disclaimer. I acknowledge that property investment involves risks and I accept these risks.";
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
 
-      {/* Modal */}
       <div className="relative bg-[#2A2A2A] rounded-xl max-w-lg w-full max-h-[85vh] overflow-y-auto p-6 shadow-2xl">
-        <h2 className="text-lg font-bold text-white mb-4">
-          Investment Disclaimer
-        </h2>
+        <h2 className="text-lg font-bold text-white mb-4">{title}</h2>
 
         <div className="space-y-3 text-sm text-gray-300">
-          <p>
-            Investing in property involves significant risks and may not be
-            suitable for all investors. The value of your investment can go down
-            as well as up, and you may not get back the full amount invested.
-          </p>
-          <p>
-            Past performance is not a reliable indicator of future results. The
-            information provided on this website is for general information
-            purposes only and does not constitute financial advice.
-          </p>
-          <p>Before making any investment decision, you should:</p>
-          <ul className="list-disc pl-6 space-y-1">
-            <li>
-              Consider your own financial circumstances and investment objectives
-            </li>
-            <li>Seek independent financial advice</li>
-            <li>
-              Understand that property investment is illiquid and may be
-              difficult to sell quickly
-            </li>
-            <li>
-              Be aware that returns are not guaranteed and may be lower than
-              expected
-            </li>
-            <li>Consider all associated costs and fees</li>
-          </ul>
-          <p className="font-medium text-xs text-gray-400">
-            By proceeding with an investment, you acknowledge that you have read
-            and understood this disclaimer and accept the risks associated with
-            property investment.
-          </p>
+          {cmsData?.disclaimerContent ? (
+            <PortableText value={cmsData.disclaimerContent} />
+          ) : (
+            <>
+              <p>
+                Investing in property involves significant risks and may not be
+                suitable for all investors. The value of your investment can go
+                down as well as up, and you may not get back the full amount
+                invested.
+              </p>
+              <p>
+                Past performance is not a reliable indicator of future results.
+                The information provided on this website is for general
+                information purposes only and does not constitute financial
+                advice.
+              </p>
+              <p>Before making any investment decision, you should:</p>
+              <ul className="list-disc pl-6 space-y-1">
+                <li>
+                  Consider your own financial circumstances and investment
+                  objectives
+                </li>
+                <li>Seek independent financial advice</li>
+                <li>
+                  Understand that property investment is illiquid and may be
+                  difficult to sell quickly
+                </li>
+                <li>
+                  Be aware that returns are not guaranteed and may be lower than
+                  expected
+                </li>
+                <li>Consider all associated costs and fees</li>
+              </ul>
+              <p className="font-medium text-xs text-gray-400">
+                By proceeding with an investment, you acknowledge that you have
+                read and understood this disclaimer and accept the risks
+                associated with property investment.
+              </p>
+            </>
+          )}
         </div>
 
-        {/* Checkbox */}
         <label className="flex items-start gap-3 mt-5 cursor-pointer">
           <input
             type="checkbox"
@@ -181,13 +203,9 @@ function DisclaimerModal({
             onChange={(e) => setChecked(e.target.checked)}
             className="mt-1 h-4 w-4 rounded border-gray-300 text-[#B69A3E] focus:ring-[#B69A3E]"
           />
-          <span className="text-sm text-gray-300">
-            I have read and understood the investment disclaimer. I acknowledge
-            that property investment involves risks and I accept these risks.
-          </span>
+          <span className="text-sm text-gray-300">{checkboxLabel}</span>
         </label>
 
-        {/* Buttons */}
         <div className="flex gap-3 mt-6">
           <button
             type="button"
@@ -212,7 +230,7 @@ function DisclaimerModal({
   );
 }
 
-/* ─── Mobile Drawer ─── */
+/* --- Mobile Drawer --- */
 function MobileDrawer({
   open,
   onClose,
@@ -222,7 +240,6 @@ function MobileDrawer({
   onClose: () => void;
   project: any;
 }) {
-  // Prevent body scroll when drawer is open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
@@ -236,7 +253,6 @@ function MobileDrawer({
 
   return (
     <>
-      {/* Backdrop */}
       <div
         className={`fixed inset-0 z-40 bg-black/50 transition-opacity duration-300 ${
           open ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -244,13 +260,11 @@ function MobileDrawer({
         onClick={onClose}
       />
 
-      {/* Drawer */}
       <div
         className={`fixed inset-x-0 bottom-0 z-50 bg-[#2A2A2A] rounded-t-2xl max-h-[85vh] overflow-y-auto transition-transform duration-300 ${
           open ? "translate-y-0" : "translate-y-full"
         }`}
       >
-        {/* Handle bar */}
         <div className="sticky top-0 bg-[#2A2A2A] pt-3 pb-2 px-4 flex justify-between items-center border-b border-white/10 rounded-t-2xl">
           <div className="w-10 h-1 bg-gray-500 rounded-full mx-auto" />
         </div>
@@ -261,8 +275,18 @@ function MobileDrawer({
             onClick={onClose}
             className="text-gray-400 hover:text-white transition-colors"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
@@ -274,16 +298,29 @@ function MobileDrawer({
   );
 }
 
-/* ─── Main Component ─── */
-export default function InvestContact({ project }: InvestContactProps) {
-  const selectedProjectId = project?.id;
+/* --- Main Component --- */
+export default function InvestContact({
+  project,
+  projects = [],
+  formData: cmsFormData,
+}: InvestContactProps) {
+  const selectedProjectSlug = project?.slug;
 
-  const [formData, setFormData] = useState({
+  const properties = projects.map((p: any) => ({
+    slug: p.slug,
+    title: p.title,
+    location: p.projectDetails?.location,
+    investmentAmount: formatCurrency(
+      p.dealBreakdown?.costs?.totalInvestment || 0
+    ),
+  }));
+
+  const [formState, setFormState] = useState({
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
-    propertyId: selectedProjectId ? String(selectedProjectId) : "",
+    propertySlug: selectedProjectSlug || "",
     investmentAmount: "",
     investmentExperience: "",
     investmentGoals: "",
@@ -294,16 +331,23 @@ export default function InvestContact({ project }: InvestContactProps) {
   const [disclaimerOpen, setDisclaimerOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // Derive the active project from the dropdown selection
-  const activeProject = formData.propertyId
-    ? propertyList.find((p: any) => String(p.id) === formData.propertyId)
+  const activeProject = formState.propertySlug
+    ? projects.find((p: any) => p.slug === formState.propertySlug)
     : project;
 
   useEffect(() => {
-    if (selectedProjectId) {
-      setFormData((prev) => ({ ...prev, propertyId: String(selectedProjectId) }));
+    if (selectedProjectSlug) {
+      setFormState((prev) => ({
+        ...prev,
+        propertySlug: selectedProjectSlug,
+      }));
     }
-  }, [selectedProjectId]);
+  }, [selectedProjectSlug]);
+
+  const formHeading = cmsFormData?.formHeading || "";
+  const formSubtext = cmsFormData?.formSubtext || "";
+  const submitButtonText = cmsFormData?.submitButtonText || "";
+  const successMessage = cmsFormData?.successMessage || "";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -312,26 +356,26 @@ export default function InvestContact({ project }: InvestContactProps) {
       return;
     }
     sendEmail({
-      name: formData.firstName + " " + formData.lastName,
+      name: formState.firstName + " " + formState.lastName,
       message: `
-      First Name: ${formData.firstName}
-      Last Name: ${formData.lastName}
-      Email: ${formData.email}
-      Phone: ${formData.phone}
-      Property ID: ${formData.propertyId}
-      Investment Amount: ${formData.investmentAmount}
-      Investment Experience: ${formData.investmentExperience}
-      Investment Goals: ${formData.investmentGoals}
-      Additional Information: ${formData.additionalInfo}
+      First Name: ${formState.firstName}
+      Last Name: ${formState.lastName}
+      Email: ${formState.email}
+      Phone: ${formState.phone}
+      Property Slug: ${formState.propertySlug}
+      Investment Amount: ${formState.investmentAmount}
+      Investment Experience: ${formState.investmentExperience}
+      Investment Goals: ${formState.investmentGoals}
+      Additional Information: ${formState.additionalInfo}
       `,
-      email: formData.email,
+      email: formState.email,
     }).then(() => {
-      setFormData({
+      setFormState({
         firstName: "",
         lastName: "",
         email: "",
         phone: "",
-        propertyId: "",
+        propertySlug: "",
         investmentAmount: "",
         investmentExperience: "",
         investmentGoals: "",
@@ -348,7 +392,7 @@ export default function InvestContact({ project }: InvestContactProps) {
     >
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
+    setFormState((prev) => ({
       ...prev,
       [name]: value,
     }));
@@ -357,22 +401,28 @@ export default function InvestContact({ project }: InvestContactProps) {
   const formContent = (
     <div>
       <h2 className="text-2xl xl:text-4xl font-bold text-white mb-4 after:content-[''] after:block after:w-16 after:h-1 after:bg-gold after:mt-2">
-        Get in Touch
+        {formHeading}
       </h2>
-      <p className="text-gray-300 mb-8">
-        Fill out the form below to start your investment journey with us.
-        We&apos;ll get back to you within 24 hours.
-      </p>
+      <p className="text-gray-300 mb-8">{formSubtext}</p>
 
-      {/* Mobile: View Project Details button */}
       {activeProject && (
         <button
           type="button"
           onClick={() => setDrawerOpen(true)}
           className="md:hidden w-full mb-6 flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-[#B69A3E]/40 text-[#B69A3E] hover:bg-[#B69A3E]/10 transition-colors"
         >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+            />
           </svg>
           View Project Details
         </button>
@@ -385,7 +435,7 @@ export default function InvestContact({ project }: InvestContactProps) {
             <input
               type="text"
               name="firstName"
-              value={formData.firstName}
+              value={formState.firstName}
               onChange={handleChange}
               className={inputClasses}
               required
@@ -396,7 +446,7 @@ export default function InvestContact({ project }: InvestContactProps) {
             <input
               type="text"
               name="lastName"
-              value={formData.lastName}
+              value={formState.lastName}
               onChange={handleChange}
               className={inputClasses}
               required
@@ -410,7 +460,7 @@ export default function InvestContact({ project }: InvestContactProps) {
             <input
               type="email"
               name="email"
-              value={formData.email}
+              value={formState.email}
               onChange={handleChange}
               className={inputClasses}
               required
@@ -421,7 +471,7 @@ export default function InvestContact({ project }: InvestContactProps) {
             <input
               type="tel"
               name="phone"
-              value={formData.phone}
+              value={formState.phone}
               onChange={handleChange}
               className={inputClasses}
               required
@@ -433,15 +483,15 @@ export default function InvestContact({ project }: InvestContactProps) {
           <div>
             <label className="block text-white mb-2">Select Property</label>
             <select
-              name="propertyId"
-              value={formData.propertyId}
+              name="propertySlug"
+              value={formState.propertySlug}
               onChange={handleChange}
               className={selectClasses}
               required
             >
               <option value="">Choose a property</option>
               {properties.map((property) => (
-                <option key={property.id} value={property.id}>
+                <option key={property.slug} value={property.slug}>
                   {property.title} - {property.location} (
                   {property.investmentAmount})
                 </option>
@@ -453,7 +503,7 @@ export default function InvestContact({ project }: InvestContactProps) {
             <input
               type="text"
               name="investmentAmount"
-              value={formData.investmentAmount}
+              value={formState.investmentAmount}
               onChange={handleChange}
               placeholder="Enter your investment amount"
               className={inputClasses}
@@ -469,7 +519,7 @@ export default function InvestContact({ project }: InvestContactProps) {
             </label>
             <select
               name="investmentExperience"
-              value={formData.investmentExperience}
+              value={formState.investmentExperience}
               onChange={handleChange}
               className={selectClasses}
               required
@@ -484,7 +534,7 @@ export default function InvestContact({ project }: InvestContactProps) {
             <label className="block text-white mb-2">Investment Goals</label>
             <select
               name="investmentGoals"
-              value={formData.investmentGoals}
+              value={formState.investmentGoals}
               onChange={handleChange}
               className={selectClasses}
               required
@@ -498,10 +548,12 @@ export default function InvestContact({ project }: InvestContactProps) {
         </div>
 
         <div>
-          <label className="block text-white mb-2">Additional Information</label>
+          <label className="block text-white mb-2">
+            Additional Information
+          </label>
           <textarea
             name="additionalInfo"
-            value={formData.additionalInfo}
+            value={formState.additionalInfo}
             onChange={handleChange}
             rows={4}
             placeholder="Tell us about your investment preferences or any questions you have"
@@ -509,7 +561,6 @@ export default function InvestContact({ project }: InvestContactProps) {
           />
         </div>
 
-        {/* Disclaimer link + submit */}
         <div className="space-y-3">
           <button
             type="button"
@@ -521,8 +572,18 @@ export default function InvestContact({ project }: InvestContactProps) {
 
           {disclaimerAccepted && (
             <p className="flex items-center gap-2 text-sm text-green-400">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
               Disclaimer accepted
             </p>
@@ -533,16 +594,25 @@ export default function InvestContact({ project }: InvestContactProps) {
             className="w-full bg-[#B69A3E] text-white py-3 rounded hover:bg-[#A0882E] hover:brightness-110 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={!disclaimerAccepted}
           >
-            Submit Investment Interest
+            {submitButtonText}
           </button>
 
           {emailSent && (
             <div className="flex items-center gap-x-2 text-green-400 bg-green-400/10 px-4 py-3 rounded">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M5 13l4 4L19 7"
+                />
               </svg>
-              Your investment interest has been submitted successfully. We&apos;ll
-              be in touch within 24 hours.
+              {successMessage}
             </div>
           )}
         </div>
@@ -555,10 +625,8 @@ export default function InvestContact({ project }: InvestContactProps) {
       <div className="w-full max-w-screen-xl mx-auto px-4">
         {activeProject ? (
           <div className="flex flex-col md:flex-row gap-10">
-            {/* Left: Form (~55%) */}
             <div className="w-full md:w-[55%]">{formContent}</div>
 
-            {/* Right: Project Details (~45%) — desktop only */}
             <div className="hidden md:block w-full md:w-[45%]">
               <div className="sticky top-24 bg-white/5 rounded-xl p-6 border border-white/10">
                 <ProjectDetailsPanel project={activeProject} />
@@ -570,7 +638,6 @@ export default function InvestContact({ project }: InvestContactProps) {
         )}
       </div>
 
-      {/* Mobile Drawer */}
       {activeProject && (
         <MobileDrawer
           open={drawerOpen}
@@ -579,7 +646,6 @@ export default function InvestContact({ project }: InvestContactProps) {
         />
       )}
 
-      {/* Disclaimer Modal */}
       <DisclaimerModal
         open={disclaimerOpen}
         onClose={() => setDisclaimerOpen(false)}
@@ -587,6 +653,7 @@ export default function InvestContact({ project }: InvestContactProps) {
           setDisclaimerAccepted(true);
           setDisclaimerOpen(false);
         }}
+        cmsData={cmsFormData}
       />
     </section>
   );

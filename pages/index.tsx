@@ -1,9 +1,10 @@
 import Landing from "@/components/sections/landing/Landing";
 import Head from "next/head";
-import { GetServerSideProps } from "next";
+import { GetStaticProps } from "next";
 import { Suspense, lazy } from "react";
+import { client } from "@/sanity/lib/client";
+import { homePageQuery } from "@/sanity/queries";
 
-// Lazy load components (defined outside component to avoid re-creation on every render)
 const Properties = lazy(
   () => import("@/components/sections/properties/Properties")
 );
@@ -25,58 +26,68 @@ function SectionFallback() {
   );
 }
 
-export default function Home() {
+interface HomeProps {
+  data: any;
+}
+
+export default function Home({ data }: HomeProps) {
+  const seo = data?.homePage?.seo;
+  const pageTitle =
+    seo?.title || "Tapres | Next Generation Property Investment";
+  const pageDescription =
+    seo?.description ||
+    "Tapres offers investors a convenient way to be involved in property investment and achieve safe yet excellent returns. Explore HMOs, flats, and serviced accommodation across the UK.";
+
   return (
     <>
       <Head>
-        <title>Tapres | Next Generation Property Investment</title>
-        <meta
-          name="description"
-          content="Tapres offers investors a convenient way to be involved in property investment and achieve safe yet excellent returns. Explore HMOs, flats, and serviced accommodation across the UK."
-        />
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-        <meta property="og:title" content="Tapres | Next Generation Property Investment" />
-        <meta
-          property="og:description"
-          content="Invest in high-quality UK property with Tapres. HMOs, flats, and serviced accommodation with strong returns."
-        />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
         <meta property="og:type" content="website" />
-        <meta property="og:image" content="/assets/tapres-logo-transparent.png" />
+        <meta
+          property="og:image"
+          content="/assets/tapres-logo-transparent.png"
+        />
       </Head>
       <main className="w-full pt-20">
-        <Landing />
+        <Landing data={data?.homePage} />
 
         <Suspense fallback={<SectionFallback />}>
-          <About />
+          <About data={data?.about} />
         </Suspense>
 
         <Suspense fallback={<SectionFallback />}>
-          <Projects />
+          <Projects projects={data?.projects} />
         </Suspense>
 
         <Suspense fallback={<SectionFallback />}>
-          <TeamMembers />
+          <TeamMembers data={data?.team} />
         </Suspense>
 
         <Suspense fallback={<SectionFallback />}>
-          <Properties />
+          <Properties properties={data?.properties} />
         </Suspense>
 
         <Suspense fallback={<SectionFallback />}>
-          <Invest />
+          <Invest data={data?.invest} />
         </Suspense>
 
         <Suspense fallback={<SectionFallback />}>
-          <Contact />
+          <Contact data={data?.contact} />
         </Suspense>
       </main>
     </>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getStaticProps: GetStaticProps = async () => {
+  const data = await client.fetch(homePageQuery);
   return {
-    props: {},
+    props: { data },
+    revalidate: 60,
   };
 };

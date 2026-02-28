@@ -2,7 +2,7 @@ import PropertyCard from "@/components/property-card/PropertyCard";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import LightGallery from "lightgallery/react";
-import propertyList from "./propertyList";
+import { urlFor } from "@/sanity/lib/client";
 
 // import styles
 import "lightgallery/css/lightgallery.css";
@@ -15,10 +15,14 @@ import lgThumbnail from "lightgallery/plugins/thumbnail";
 // Import Swiper styles
 import "swiper/css";
 
-export default function Projects() {
+interface ProjectsProps {
+  projects?: any[];
+}
+
+export default function Projects({ projects = [] }: ProjectsProps) {
   const lightGallery = useRef<any>(null);
   const [slidesPerView, setSlidesPerView] = useState(3);
-  const [currentProperty, setCurrentProperty] = useState(propertyList[0]);
+  const [currentProperty, setCurrentProperty] = useState(projects[0]);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const onInit = useCallback((detail: any) => {
     if (detail) {
@@ -30,13 +34,12 @@ export default function Projects() {
   const slidesPerViewTabletRatio = 2.3 / 768;
 
   const selectProperty = (index: number) => {
-    setCurrentProperty(propertyList[index]);
+    setCurrentProperty(projects[index]);
     setGalleryOpen(true);
   };
 
   const handleSize = () => {
     if (typeof window !== "undefined") {
-      // browser code
       if (window.innerWidth < 640) {
         setSlidesPerView(slidesPerViewMobileRatio * window.innerWidth);
       } else if (window.innerWidth < 800) {
@@ -55,6 +58,20 @@ export default function Projects() {
       lightGallery.current.openGallery();
     }
   }, [galleryOpen]);
+
+  const getImageUrl = (img: any) => {
+    if (typeof img === "string") return img;
+    if (img?.asset) return urlFor(img).width(1280).url();
+    return "";
+  };
+
+  const getProjectImages = (project: any) => {
+    if (!project?.images) return [];
+    return project.images.map((img: any) => getImageUrl(img));
+  };
+
+  if (!projects.length) return null;
+
   return (
     <section className="w-full bg-white py-8" id="projects-section">
       <div className="w-full max-w-screen-xl mx-auto py-2  2xl:px-0 large-tablet:px-8">
@@ -62,7 +79,7 @@ export default function Projects() {
           <h2
             className="text-2xl xl:text-4xl font-bold text-[#1E1E1E] after:content-[''] after:block after:w-16 after:h-1 after:bg-gold after:mt-2"
             onClick={() => {
-              lightGallery.current.openGallery();
+              lightGallery.current?.openGallery();
             }}
           >
             Projects
@@ -80,17 +97,20 @@ export default function Projects() {
             },
           }}
         >
-          {propertyList.map((property, index) => {
+          {projects.map((property, index) => {
+            const imgUrl = property.mainImage
+              ? urlFor(property.mainImage).width(800).url()
+              : property.imgUrl || "";
             return (
-              <SwiperSlide key={index} className="!h-auto">
+              <SwiperSlide key={property._id || index} className="!h-auto">
                 <div className="h-full">
                   <PropertyCard
-                    {...{
-                      ...property,
-                      price: "Invest Now",
-                      openGallery: () => selectProperty(index),
-                      href: `/invest?projectId=${property.id}`,
-                    }}
+                    imgUrl={imgUrl}
+                    title={property.title}
+                    description={property.description}
+                    price="Invest Now"
+                    openGallery={() => selectProperty(index)}
+                    href={`/invest?projectSlug=${property.slug}`}
                   />
                 </div>
               </SwiperSlide>
@@ -98,7 +118,8 @@ export default function Projects() {
           })}
         </Swiper>
       </div>
-      <LightGallery
+      {currentProperty && (
+        <LightGallery
           speed={500}
           plugins={[lgThumbnail]}
           onInit={onInit}
@@ -107,21 +128,23 @@ export default function Projects() {
             setGalleryOpen(false);
           }}
           dynamicEl={[
-            ...currentProperty.images.map((image) => {
-              return {
-                src: image as string,
-                thumb: image as string,
-              };
-            }),
-
-            {
-              iframe: true,
-              src: currentProperty.streetView,
-              thumb:
-                "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Google_Maps_icon_%282015-2020%29.svg/1200px-Google_Maps_icon_%282015-2020%29.svg.png",
-            },
+            ...getProjectImages(currentProperty).map((src: string) => ({
+              src,
+              thumb: src,
+            })),
+            ...(currentProperty.streetViewUrl
+              ? [
+                  {
+                    iframe: true,
+                    src: currentProperty.streetViewUrl,
+                    thumb:
+                      "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Google_Maps_icon_%282015-2020%29.svg/1200px-Google_Maps_icon_%282015-2020%29.svg.png",
+                  },
+                ]
+              : []),
           ]}
-      ></LightGallery>
+        ></LightGallery>
+      )}
     </section>
   );
 }

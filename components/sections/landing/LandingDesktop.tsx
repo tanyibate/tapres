@@ -2,32 +2,24 @@ import styles from "./landing-styles.module.scss";
 import Image from "next/image";
 import landingImage from "@/assets/images/landing-background.jpg";
 import Button from "@/components/button/Button";
+import { urlFor } from "@/sanity/lib/client";
 
-export default function Landing() {
-  const arrayOfTwentyFour = Array.from(Array(24).keys());
-  const arrayOfBlankSqaures = [0, 1, 2, 6, 7, 8, 12, 13, 14, 18, 19];
+interface LandingDesktopProps {
+  data?: any;
+}
+
+export default function Landing({ data }: LandingDesktopProps) {
   const arrayOfBlankTextBackgroundSquares = Array.from(Array(12).keys());
-  const returnSquares = (squares: any) => {
-    let oddColour = "darker-square";
-    let evenColour = "lighter-square";
-    let rowLength = 3;
-    for (let i = 0; i < squares.length; i++) {
-      if (arrayOfBlankSqaures.includes(i)) {
-        squares[i] = <div key={"square" + i}></div>;
-      } else {
-        if (i === 17) rowLength += 1;
-        if (i % rowLength === 0) {
-          let oddColourTemp = oddColour;
-          oddColour = evenColour;
-          evenColour = oddColourTemp;
-        }
-        let squareColor = oddColour;
-        if (i % 2 === 0) squareColor = evenColour;
-        squares[i] = <div className={squareColor} key={"square" + i}></div>;
-      }
-    }
-    return squares;
-  };
+
+  const heading = data?.heading || "";
+  const tagline = data?.tagline || "";
+  const ctaText = data?.ctaText || "";
+  const ctaLink = data?.ctaLink || "#";
+
+  const bgSrc = data?.backgroundImage
+    ? urlFor(data.backgroundImage).width(1920).url()
+    : "";
+
   return (
     <div
       className="w-full relative hidden xl:block"
@@ -61,7 +53,11 @@ export default function Landing() {
           <div className="darker-square"></div>
         </div>
       </div>
-      <Image src={landingImage} alt="" className="w-full opacity-25" />
+      {typeof bgSrc === "string" ? (
+        <img src={bgSrc} alt="" className="w-full opacity-25" />
+      ) : (
+        <Image src={bgSrc} alt="" className="w-full opacity-25" />
+      )}
       <div className={styles.text_background_square_container}>
         <div className={styles.text_background_layout}>
           {arrayOfBlankTextBackgroundSquares.map((square, index) => {
@@ -77,13 +73,20 @@ export default function Landing() {
         </div>
         <div className={styles.text_container}>
           <div>
-            <p className={styles.company_title}>Tapres</p>
+            <p className={styles.company_title}>{heading}</p>
             <p className={styles.company_slogan + " title"}>
-              Next Generation<br></br> Homes
+              {tagline.includes("\n")
+                ? tagline.split("\n").map((line: string, i: number) => (
+                    <span key={i}>
+                      {line}
+                      {i < tagline.split("\n").length - 1 && <br />}
+                    </span>
+                  ))
+                : tagline}
             </p>
             <div className="pt-8 bg-transparent">
-              <a href="#projects-section">
-                <Button white>View our Projects</Button>
+              <a href={ctaLink}>
+                <Button white>{ctaText}</Button>
               </a>
             </div>
           </div>

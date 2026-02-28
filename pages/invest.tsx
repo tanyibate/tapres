@@ -3,33 +3,40 @@ import Head from "next/head";
 import { GetServerSideProps } from "next";
 import LookingToInvest from "@/components/looking-to-invest";
 import InvestContact from "@/components/invest-contact";
-import propertyList from "@/components/sections/projects/propertyList";
+import { client } from "@/sanity/lib/client";
+import { investPageQuery } from "@/sanity/queries";
 
 interface InvestProps {
-  projectId: number | null;
+  data: any;
+  projectSlug: string | null;
 }
 
-export default function Invest({ projectId }: InvestProps) {
-  const project = projectId
-    ? propertyList.find((p: any) => p.id === projectId)
+export default function Invest({ data, projectSlug }: InvestProps) {
+  const projects = data?.projects || [];
+  const project = projectSlug
+    ? projects.find((p: any) => p.slug === projectSlug)
     : null;
+
+  const seo = data?.investForm?.seo;
+  const pageTitle = seo?.title || "Invest | Tapres Property Investment";
+  const pageDescription =
+    seo?.description ||
+    "Start your property investment journey with Tapres. Explore HMO and serviced accommodation opportunities across the UK with strong returns.";
 
   return (
     <main className="w-full pt-20 h-full flex flex-col">
       <Head>
-        <title>Invest | Tapres Property Investment</title>
-        <meta
-          name="description"
-          content="Start your property investment journey with Tapres. Explore HMO and serviced accommodation opportunities across the UK with strong returns."
-        />
-        <meta property="og:title" content="Invest | Tapres Property Investment" />
-        <meta
-          property="og:description"
-          content="Start your property investment journey with Tapres. Explore HMO and serviced accommodation opportunities across the UK."
-        />
+        <title>{pageTitle}</title>
+        <meta name="description" content={pageDescription} />
+        <meta property="og:title" content={pageTitle} />
+        <meta property="og:description" content={pageDescription} />
       </Head>
-      <LookingToInvest />
-      <InvestContact project={project ?? undefined} />
+      <LookingToInvest data={data?.lookingToInvest} />
+      <InvestContact
+        project={project ?? undefined}
+        projects={projects}
+        formData={data?.investForm}
+      />
     </main>
   );
 }
@@ -37,10 +44,12 @@ export default function Invest({ projectId }: InvestProps) {
 export const getServerSideProps: GetServerSideProps<InvestProps> = async ({
   query,
 }) => {
-  const projectId = query.projectId ? Number(query.projectId) : null;
+  const data = await client.fetch(investPageQuery);
+  const projectSlug = (query.projectSlug as string) || null;
   return {
     props: {
-      projectId,
+      data,
+      projectSlug,
     },
   };
 };

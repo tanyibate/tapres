@@ -37,7 +37,11 @@ const Input = ({
   </div>
 );
 
-export default function Contact() {
+interface ContactProps {
+  data?: any;
+}
+
+export default function Contact({ data }: ContactProps) {
   const {
     register,
     handleSubmit,
@@ -45,6 +49,11 @@ export default function Contact() {
   } = useForm();
 
   const [emailSent, setEmailSent] = useState(false);
+
+  const heading = data?.heading || "";
+  const subheading = data?.subheading || "";
+  const emailAddress = data?.emailAddress || "";
+  const submitButtonText = data?.submitButtonText || "";
 
   const onEmailSubmit = async () => {
     setEmailSent(true);
@@ -56,11 +65,9 @@ export default function Contact() {
         <div className="w-[90%] mx-auto">
           <div className="flex flex-col items-center gap-y-2 text-center">
             <h2 className="font-gilroy font-bold text-lg md:text-5xl after:content-[''] after:block after:w-16 after:h-1 after:bg-gold after:mt-2 after:mx-auto">
-              Send a message to Tapres
+              {heading}
             </h2>
-            <p className="text-sm">
-              Just submit your details and we&apos;ll be in touch shortly.
-            </p>
+            <p className="text-sm">{subheading}</p>
             <div className="space-y-4 mb-8">
               <div className="flex gap-x-4 items-center">
                 <div className="w-8">
@@ -72,15 +79,15 @@ export default function Contact() {
                     className="h-6 md:h-8 w-auto"
                   />
                 </div>
-                <span className="md:text-xl font-bold">info@tapres.com</span>
+                <span className="md:text-xl font-bold">{emailAddress}</span>
               </div>
             </div>
           </div>
           <div>
             <form
               className="space-y-4"
-              onSubmit={handleSubmit(async (data) => {
-                sendEmail(data as any).then(() => {
+              onSubmit={handleSubmit(async (formData) => {
+                sendEmail(formData as any).then(() => {
                   onEmailSubmit();
                 });
               })}
@@ -105,7 +112,9 @@ export default function Contact() {
                   label="phoneNumber"
                   register={register}
                   required
-                  errorMessage={errors.phoneNumber && "Phone number is invalid"}
+                  errorMessage={
+                    errors.phoneNumber && "Phone number is invalid"
+                  }
                   labelText="Phone Number"
                 />
               </div>
@@ -128,11 +137,21 @@ export default function Contact() {
                   }
                 ></textarea>
               </div>
-              <Button white> Send a Request</Button>
+              <Button white>{submitButtonText}</Button>
               {emailSent && (
                 <div className="flex items-center gap-x-2 text-green-400 bg-green-400/10 px-4 py-3 rounded">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M5 13l4 4L19 7"
+                    />
                   </svg>
                   Email sent successfully
                 </div>

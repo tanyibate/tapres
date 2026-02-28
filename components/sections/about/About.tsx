@@ -16,15 +16,15 @@ export default function About() {
           className="w-11/12 rounded-tr-xl rounded-br-xl lg:rounded-xl mx-auto aspect-[9/16]"
         ></iframe>
       </div>
-      <div className="w-full lg:w-7/12 flex flex-col gap-y-2 items-start  px-8 lg:px-0 lg:pl-4">
-        <h2 className="text-2xl xl:text-4xl font-bold text-[#1E1E1E]">
+      <div className="w-full lg:w-7/12 flex flex-col gap-y-4 items-start px-8 lg:px-0 lg:pl-4">
+        <h2 className="text-2xl xl:text-4xl font-bold text-[#1E1E1E] after:content-[''] after:block after:w-16 after:h-1 after:bg-gold after:mt-2">
           About Tapres
         </h2>
-        <div className="text-lg text-[#3A3A3A] space-y-2">
+        <div className="text-lg text-[#3A3A3A] space-y-4">
           <p>
             Tapres limited was founded in 2022 with the mission to provide
             Houses of Multiple Occupancy (HMO&apos;s) to professional by buying,
-            renovate, re-mortgage and rent using investor’s money and bridging
+            renovate, re-mortgage and rent using investor&apos;s money and bridging
             loans. We also provide home away from home by providing high quality
             Serviced accommodation(SA).
           </p>

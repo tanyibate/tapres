@@ -12,11 +12,11 @@ export default function Invest() {
       className="w-full flex flex-col  items-center justify-center md:flex-row max-w-screen-xl mx-auto py-16 gap-y-12"
       id="invest-section"
     >
-      <div className="w-full md:flex-1 pl-8">
-        <h2 className="text-2xl xl:text-4xl font-bold text-[#1E1E1E]">
+      <div className="w-full md:flex-1 pl-8 border-l-4 border-gold">
+        <h2 className="text-2xl xl:text-4xl font-bold text-[#1E1E1E] after:content-[''] after:block after:w-16 after:h-1 after:bg-gold after:mt-2">
           Invest
         </h2>
-        <div className="text-lg text-[#3A3A3A] flex flex-col gap-y-10 mb-6 pr-2">
+        <div className="text-lg text-[#3A3A3A] flex flex-col gap-y-10 mb-6 pr-2 mt-4">
           <p>
             We focus on buy-to-hold investment properties in Liverpool, Reading
             High Wycombe. These range from HMOs to flats.
@@ -34,7 +34,7 @@ export default function Invest() {
         </div>
       </div>
       <div className="w-full md:flex-1 pl-8 md:pl-0 relative block min-h-full">
-        <Image src={investImage} alt="" className="w-full" />
+        <Image src={investImage} alt="Tapres investment property" className="w-full" />
       </div>
     </section>
   );

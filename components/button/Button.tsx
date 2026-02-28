@@ -13,9 +13,10 @@ export default function Button({
 }) {
   return (
     <button
-      className={`${styles.button} + ${white ? " text-white" : ""} px-3 py-2 ${
+      type="button"
+      className={`${styles.button} ${white ? " text-white" : ""} px-3 py-2 ${
         small && "p-1"
-      }`}
+      } hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200`}
       onClick={onClick}
     >
       {children}

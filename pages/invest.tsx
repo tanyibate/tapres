@@ -1,55 +1,46 @@
 import React from "react";
+import Head from "next/head";
+import { GetServerSideProps } from "next";
 import LookingToInvest from "@/components/looking-to-invest";
 import InvestContact from "@/components/invest-contact";
+import propertyList from "@/components/sections/projects/propertyList";
 
-export default function Invest() {
+interface InvestProps {
+  projectId: number | null;
+}
+
+export default function Invest({ projectId }: InvestProps) {
+  const project = projectId
+    ? propertyList.find((p: any) => p.id === projectId)
+    : null;
+
   return (
     <main className="w-full pt-20 h-full flex flex-col">
+      <Head>
+        <title>Invest | Tapres Property Investment</title>
+        <meta
+          name="description"
+          content="Start your property investment journey with Tapres. Explore HMO and serviced accommodation opportunities across the UK with strong returns."
+        />
+        <meta property="og:title" content="Invest | Tapres Property Investment" />
+        <meta
+          property="og:description"
+          content="Start your property investment journey with Tapres. Explore HMO and serviced accommodation opportunities across the UK."
+        />
+      </Head>
       <LookingToInvest />
-      <InvestContact />
-      <div className="w-full max-w-screen-xl mx-auto px-4 py-8">
-        <div className="bg-gray-50 p-6 rounded-lg">
-          <h2 className="text-lg font-bold text-[#1E1E1E] mb-3">
-            Investment Disclaimer
-          </h2>
-          <div className="space-y-2 text-sm text-[#3A3A3A]">
-            <p>
-              Investing in property involves significant risks and may not be
-              suitable for all investors. The value of your investment can go
-              down as well as up, and you may not get back the full amount
-              invested.
-            </p>
-            <p>
-              Past performance is not a reliable indicator of future results.
-              The information provided on this website is for general
-              information purposes only and does not constitute financial
-              advice.
-            </p>
-            <p>Before making any investment decision, you should:</p>
-            <ul className="list-disc pl-6 space-y-1">
-              <li>
-                Consider your own financial circumstances and investment
-                objectives
-              </li>
-              <li>Seek independent financial advice</li>
-              <li>
-                Understand that property investment is illiquid and may be
-                difficult to sell quickly
-              </li>
-              <li>
-                Be aware that returns are not guaranteed and may be lower than
-                expected
-              </li>
-              <li>Consider all associated costs and fees</li>
-            </ul>
-            <p className="font-medium text-xs">
-              By proceeding with an investment, you acknowledge that you have
-              read and understood this disclaimer and accept the risks
-              associated with property investment.
-            </p>
-          </div>
-        </div>
-      </div>
+      <InvestContact project={project ?? undefined} />
     </main>
   );
 }
+
+export const getServerSideProps: GetServerSideProps<InvestProps> = async ({
+  query,
+}) => {
+  const projectId = query.projectId ? Number(query.projectId) : null;
+  return {
+    props: {
+      projectId,
+    },
+  };
+};

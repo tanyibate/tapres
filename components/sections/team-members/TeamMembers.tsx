@@ -14,12 +14,12 @@ export default function TeamMembers() {
       <div className={styles.container}>
         <Image
           src={aboutUsMobile}
-          alt=""
+          alt="About us background"
           className="w-full opacity-25 md:hidden"
         />
         <Image
           src={aboutUs}
-          alt=""
+          alt="About us background"
           className="w-full opacity-25 hidden md:block"
         />
         <div className={styles.square_container + " hidden md:grid"}>
@@ -48,7 +48,7 @@ export default function TeamMembers() {
             " text-white pl-8 pt-10 pr-4 md:pr-2 lg:pl-20 md:pt-20"
           }
         >
-          <h2 className="font-bold font-gilroy text-xl md:text-2xl">Peter</h2>
+          <h2 className="font-bold font-gilroy text-xl md:text-2xl after:content-[''] after:block after:w-16 after:h-1 after:bg-gold after:mt-2">Peter</h2>
           <div className="space-y-4">
             <p className="text-xs lg:text-base">
               Peter is founder and Managing Director of Tapres LTD. He transfers
@@ -68,7 +68,7 @@ export default function TeamMembers() {
         <div className={styles.img_container}>
           <Image
             src={headshot}
-            alt=""
+            alt="Peter - Founder and Managing Director of Tapres"
             className="relative w-9/12 h-5/6 md:w-8/12 md:h-3/4"
             style={{
               objectFit: "cover",

@@ -23,7 +23,6 @@ export default function Properties() {
   const onInit = useCallback((detail: any) => {
     if (detail) {
       lightGallery.current = detail.instance;
-      console.log("intialized");
     }
   }, []);
 
@@ -48,6 +47,7 @@ export default function Properties() {
   useEffect(() => {
     handleSize();
     window.addEventListener("resize", handleSize, false);
+    return () => window.removeEventListener("resize", handleSize, false);
   }, []);
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function Properties() {
       <div className="w-full max-w-screen-xl mx-auto py-2  2xl:px-0 large-tablet:px-8">
         <div className="flex justify-between mb-8 px-8 large-tablet:px-0">
           <h2
-            className="text-2xl xl:text-4xl font-bold text-[#1E1E1E]"
+            className="text-2xl xl:text-4xl font-bold text-[#1E1E1E] after:content-[''] after:block after:w-16 after:h-1 after:bg-gold after:mt-2"
             onClick={() => {
               lightGallery.current.openGallery();
             }}
@@ -73,6 +73,7 @@ export default function Properties() {
           slidesPerView={slidesPerView}
           loop
           centeredSlides
+          className="!items-stretch"
           breakpoints={{
             800: {
               centeredSlides: false,
@@ -81,8 +82,8 @@ export default function Properties() {
         >
           {propertyList.map((property, index) => {
             return (
-              <SwiperSlide key={index}>
-                <div onClick={() => selectProperty(index)}>
+              <SwiperSlide key={index} className="!h-auto">
+                <div className="h-full" onClick={() => selectProperty(index)}>
                   <PropertyCard
                     {...{
                       ...property,
@@ -93,13 +94,13 @@ export default function Properties() {
             );
           })}
         </Swiper>
-        <LightGallery
+      </div>
+      <LightGallery
           speed={500}
           plugins={[lgThumbnail]}
           onInit={onInit}
           dynamic
           onBeforeClose={() => {
-            console.log("before close");
             setGalleryOpen(false);
           }}
           dynamicEl={[
@@ -117,8 +118,7 @@ export default function Properties() {
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Google_Maps_icon_%282015-2020%29.svg/1200px-Google_Maps_icon_%282015-2020%29.svg.png",
             },
           ]}
-        ></LightGallery>
-      </div>
+      ></LightGallery>
     </section>
   );
 }

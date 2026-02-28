@@ -440,7 +440,7 @@ const ProjectPage = ({ project }: ProjectPageProps) => {
               transition={{ delay: 0.2 }}
               className="mt-8"
             >
-              <Button white onClick={() => router.replace("/invest")}>
+              <Button white onClick={() => router.replace(`/invest?projectId=${project.id}`)}>
                 Invest Now
               </Button>
             </motion.div>

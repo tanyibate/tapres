@@ -3,6 +3,7 @@ import Hamburger from "hamburger-react";
 import styles from "./navbar-styles.module.scss";
 import { useState } from "react";
 import MobileMenu from "../mobile-menu/MobileMenu";
+import Image from "next/image";
 
 export default function Navbar({ route }: { route: string }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -10,14 +11,19 @@ export default function Navbar({ route }: { route: string }) {
   return (
     <>
       <nav
-        className={`fixed right-0 z-50 flex justify-between px-12 w-full items-center h-20 ${
-          route === "/" ? "bg-black" : "bg-white"
+        className={`fixed right-0 z-50 flex justify-between px-12 w-full items-center h-20 transition-colors duration-300 ${
+          route === "/"
+            ? "bg-black/80 backdrop-blur-md border-b border-white/10"
+            : "bg-white/80 backdrop-blur-md border-b border-black/10"
         }`}
       >
-        <img
+        <Image
           src="/assets/tapres-logo-transparent.png"
-          alt=""
+          alt="Tapres Logo"
+          width={96}
+          height={40}
           className="w-24"
+          priority
         />
         <ul className={`text-lg items-center gap-x-12 hidden xl:flex`}>
           {["Home", "About", "Properties", "Invest"].map((item, index) => {
@@ -25,7 +31,7 @@ export default function Navbar({ route }: { route: string }) {
               <li
                 className={`${
                   route === "/" ? "text-white" : "text-black"
-                } cursor-pointer hover:text-gold`}
+                } cursor-pointer hover:text-gold transition-colors duration-200`}
                 key={"navbar-item-" + index}
               >
                 <a

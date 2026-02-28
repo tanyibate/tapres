@@ -10,6 +10,7 @@
 @font-face {
   font-family: "Quicksand";
   src: url("../assets/quicksand/Quicksand-VariableFont_wght.ttf");
+  font-display: swap;
 }
 
 html,
@@ -26,6 +27,7 @@ body,
   src: url("../assets/gilroy/Gilroy-Bold.ttf");
   font-weight: bold;
   font-style: normal;
+  font-display: swap;
 }
 .title {
   font-family: "Gilroy";
@@ -58,6 +60,13 @@ body,
 .lg-outer .lg-thumb-item.active,
 .lg-outer .lg-thumb-item:hover {
   border-color: var(--gold) !important;
+}
+
+.swiper-wrapper {
+  align-items: stretch;
+}
+.swiper-slide {
+  height: auto;
 }
 
 input {

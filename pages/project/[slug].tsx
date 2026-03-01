@@ -447,16 +447,17 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const project = await client.fetch(projectBySlugQuery, {
-    slug: params?.slug,
-  });
+  const [project, navData] = await Promise.all([
+    client.fetch(projectBySlugQuery, { slug: params?.slug }),
+    client.fetch(`*[_type == "navSettings"][0]{ logo, navLinks }`),
+  ]);
 
   if (!project) {
     return { notFound: true };
   }
 
   return {
-    props: { project },
+    props: { project, navData },
     revalidate: 60,
   };
 };

@@ -127,5 +127,9 @@ export const investPageQuery = groq`{
     images,
     projectDetails,
     dealBreakdown
+  },
+  "nav": *[_type == "navSettings"][0]{
+    logo,
+    navLinks
   }
 }`;

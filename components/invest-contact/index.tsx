@@ -12,10 +12,10 @@ const formatCurrency = (amount: number) => {
 };
 
 const inputClasses =
-  "w-full px-4 py-2 bg-white/10 border border-white/20 rounded text-white focus:ring-2 focus:ring-gold focus:outline-none transition-all duration-200";
+  "w-full px-3 py-1.5 text-sm bg-white/10 border border-white/20 rounded text-white focus:ring-2 focus:ring-gold focus:outline-none transition-all duration-200";
 
 const selectClasses =
-  "w-full px-4 py-2 bg-white/10 border border-white/20 rounded text-white focus:ring-2 focus:ring-gold focus:outline-none transition-all duration-200";
+  "w-full px-3 py-1.5 text-sm bg-white/10 border border-white/20 rounded text-white focus:ring-2 focus:ring-gold focus:outline-none transition-all duration-200";
 
 interface InvestContactProps {
   project?: any;
@@ -400,38 +400,15 @@ export default function InvestContact({
 
   const formContent = (
     <div>
-      <h2 className="text-2xl xl:text-4xl font-bold text-white mb-4 after:content-[''] after:block after:w-16 after:h-1 after:bg-gold after:mt-2">
+      <h2 className="text-xl xl:text-2xl 2xl:text-3xl font-bold text-white mb-3 after:content-[''] after:block after:w-12 after:h-[3px] after:bg-gold after:mt-2">
         {formHeading}
       </h2>
-      <p className="text-gray-300 mb-8">{formSubtext}</p>
+      <p className="text-gray-300 text-sm mb-6">{formSubtext}</p>
 
-      {activeProject && (
-        <button
-          type="button"
-          onClick={() => setDrawerOpen(true)}
-          className="md:hidden w-full mb-6 flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-[#B69A3E]/40 text-[#B69A3E] hover:bg-[#B69A3E]/10 transition-colors"
-        >
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-            />
-          </svg>
-          View Project Details
-        </button>
-      )}
-
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-white mb-2">First Name</label>
+            <label className="block text-white text-sm mb-1">First Name</label>
             <input
               type="text"
               name="firstName"
@@ -442,7 +419,7 @@ export default function InvestContact({
             />
           </div>
           <div>
-            <label className="block text-white mb-2">Last Name</label>
+            <label className="block text-white text-sm mb-1">Last Name</label>
             <input
               type="text"
               name="lastName"
@@ -454,9 +431,9 @@ export default function InvestContact({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-white mb-2">Email</label>
+            <label className="block text-white text-sm mb-1">Email</label>
             <input
               type="email"
               name="email"
@@ -467,7 +444,7 @@ export default function InvestContact({
             />
           </div>
           <div>
-            <label className="block text-white mb-2">Phone</label>
+            <label className="block text-white text-sm mb-1">Phone</label>
             <input
               type="tel"
               name="phone"
@@ -479,9 +456,9 @@ export default function InvestContact({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-white mb-2">Select Property</label>
+            <label className="block text-white text-sm mb-1">Select Property</label>
             <select
               name="propertySlug"
               value={formState.propertySlug}
@@ -497,9 +474,31 @@ export default function InvestContact({
                 </option>
               ))}
             </select>
+            {activeProject && (
+              <button
+                type="button"
+                onClick={() => setDrawerOpen(true)}
+                className="md:hidden w-full mt-2 flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-[#B69A3E]/40 text-[#B69A3E] text-sm hover:bg-[#B69A3E]/10 transition-colors"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                  />
+                </svg>
+                View Project Details
+              </button>
+            )}
           </div>
           <div>
-            <label className="block text-white mb-2">Investment Amount</label>
+            <label className="block text-white text-sm mb-1">Investment Amount</label>
             <input
               type="text"
               name="investmentAmount"
@@ -512,9 +511,9 @@ export default function InvestContact({
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-white mb-2">
+            <label className="block text-white text-sm mb-1">
               Investment Experience
             </label>
             <select
@@ -531,7 +530,7 @@ export default function InvestContact({
             </select>
           </div>
           <div>
-            <label className="block text-white mb-2">Investment Goals</label>
+            <label className="block text-white text-sm mb-1">Investment Goals</label>
             <select
               name="investmentGoals"
               value={formState.investmentGoals}
@@ -621,14 +620,14 @@ export default function InvestContact({
   );
 
   return (
-    <section className="w-full bg-[#1E1E1E] py-16">
+    <section className="w-full bg-[#1E1E1E] py-10 xl:py-12">
       <div className="w-full max-w-screen-xl mx-auto px-4">
         {activeProject ? (
           <div className="flex flex-col md:flex-row gap-10">
             <div className="w-full md:w-[55%]">{formContent}</div>
 
             <div className="hidden md:block w-full md:w-[45%]">
-              <div className="sticky top-24 bg-white/5 rounded-xl p-6 border border-white/10">
+              <div className="sticky top-20 bg-white/5 rounded-xl p-5 border border-white/10">
                 <ProjectDetailsPanel project={activeProject} />
               </div>
             </div>

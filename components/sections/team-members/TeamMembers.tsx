@@ -28,7 +28,7 @@ export default function TeamMembers({ data }: TeamMembersProps) {
 
   return (
     <section
-      className="w-full max-w-screen-xl flex justify-center mx-auto md:px-8 md:pb-8 relative"
+      className="w-full max-w-screen-lg flex justify-center mx-auto md:px-8 md:pb-8 relative"
       id="team-members-section"
     >
       <div className={styles.container}>
@@ -84,12 +84,12 @@ export default function TeamMembers({ data }: TeamMembersProps) {
             " text-white pl-8 pt-10 pr-4 md:pr-2 lg:pl-20 md:pt-20"
           }
         >
-          <h2 className="font-bold font-gilroy text-xl md:text-2xl after:content-[''] after:block after:w-16 after:h-1 after:bg-gold after:mt-2">
+          <h2 className="font-bold font-gilroy text-lg md:text-xl xl:text-2xl after:content-[''] after:block after:w-12 after:h-[3px] after:bg-gold after:mt-2">
             {name}
           </h2>
           <div className="space-y-4">
             {member?.bio ? (
-              <div className="text-xs lg:text-base">
+              <div className="text-xs lg:text-sm xl:text-base">
                 <PortableText value={member.bio} />
               </div>
             ) : null}

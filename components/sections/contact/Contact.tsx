@@ -30,7 +30,7 @@ const Input = ({
       type={type}
       id={label}
       {...register(label, { required, pattern })}
-      className={`text-sm md:text-lg font-bold focus:ring-2 focus:ring-gold focus:outline-none transition-all duration-200 ${
+      className={`text-sm md:text-sm font-bold focus:ring-2 focus:ring-gold focus:outline-none transition-all duration-200 ${
         errorMessage && "border border-red-500"
       }`}
     />
@@ -60,11 +60,11 @@ export default function Contact({ data }: ContactProps) {
   };
 
   return (
-    <section className="bg-[#1E1E1E] w-full py-16" id="contact-section">
-      <div className="w-full max-w-screen-xl px-8 2xl:px-0 mx-auto text-white">
+    <section className="bg-[#1E1E1E] w-full py-10 xl:py-12" id="contact-section">
+      <div className="w-full max-w-screen-lg px-8 2xl:px-0 mx-auto text-white">
         <div className="w-[90%] mx-auto">
           <div className="flex flex-col items-center gap-y-2 text-center">
-            <h2 className="font-gilroy font-bold text-lg md:text-5xl after:content-[''] after:block after:w-16 after:h-1 after:bg-gold after:mt-2 after:mx-auto">
+            <h2 className="font-gilroy font-bold text-lg md:text-3xl xl:text-4xl after:content-[''] after:block after:w-12 after:h-[3px] after:bg-gold after:mt-2 after:mx-auto">
               {heading}
             </h2>
             <p className="text-sm">{subheading}</p>
@@ -79,7 +79,7 @@ export default function Contact({ data }: ContactProps) {
                     className="h-6 md:h-8 w-auto"
                   />
                 </div>
-                <span className="md:text-xl font-bold">{emailAddress}</span>
+                <span className="md:text-base xl:text-lg font-bold">{emailAddress}</span>
               </div>
             </div>
           </div>
@@ -121,7 +121,7 @@ export default function Contact({ data }: ContactProps) {
               <div className="space-y-1">
                 <label
                   htmlFor="message"
-                  className="text-sm md:text-lg font-bold"
+                  className="text-sm md:text-sm font-bold"
                 >
                   Message
                 </label>

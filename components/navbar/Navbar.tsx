@@ -36,25 +36,25 @@ export default function Navbar({
   return (
     <>
       <nav
-        className={`fixed right-0 z-50 flex justify-between px-12 w-full items-center h-20 transition-colors duration-300 ${
+        className={`fixed right-0 z-50 flex justify-between px-6 xl:px-10 w-full items-center h-14 xl:h-16 transition-colors duration-300 ${
           route === "/"
             ? "bg-black/80 backdrop-blur-md border-b border-white/10"
             : "bg-white/80 backdrop-blur-md border-b border-black/10"
         }`}
       >
         {typeof logoSrc === "string" && logoSrc.startsWith("http") ? (
-          <img src={logoSrc} alt="Tapres Logo" className="w-24 h-auto" />
+          <img src={logoSrc} alt="Tapres Logo" className="w-16 xl:w-20 h-auto" />
         ) : (
           <Image
             src={logoSrc}
             alt="Tapres Logo"
             width={96}
             height={40}
-            className="w-24"
+            className="w-16 xl:w-20"
             priority
           />
         )}
-        <ul className={`text-lg items-center gap-x-12 hidden xl:flex`}>
+        <ul className={`text-sm items-center gap-x-6 xl:gap-x-8 hidden xl:flex`}>
           {links
             .filter((link) => !link.isButton)
             .map((link, index) => (

@@ -53,7 +53,7 @@ export default function Home({ data }: HomeProps) {
           content="/assets/tapres-logo-transparent.png"
         />
       </Head>
-      <main className="w-full pt-20">
+      <main className="w-full pt-14 xl:pt-16">
         <Landing data={data?.homePage} />
 
         <Suspense fallback={<SectionFallback />}>

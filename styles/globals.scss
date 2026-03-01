@@ -69,8 +69,9 @@ body,
   height: auto;
 }
 
-input {
-  height: 48px;
+input,
+select {
+  height: 40px;
 }
 
 textarea {
@@ -78,12 +79,13 @@ textarea {
 }
 
 input,
+select,
 textarea {
   outline-width: 0;
   background: rgba(255, 255, 255, 0.16);
   border-radius: 5px;
   width: 100%;
-  padding-left: 24px;
+  padding-left: 16px;
   &::placeholder {
     color: #ffffff;
     font-size: 12px;
@@ -92,14 +94,16 @@ textarea {
 }
 
 @media screen and (min-width: 768px) {
-  input {
-    height: 68px;
+  input,
+  select {
+    height: 44px;
   }
   input,
+  select,
   textarea {
     &::placeholder {
-      font-size: 16px;
-      line-height: 20px;
+      font-size: 14px;
+      line-height: 18px;
     }
   }
 }

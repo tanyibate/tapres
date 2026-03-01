@@ -17,7 +17,7 @@ export default function PropertyCard({
   href?: string;
 }) {
   return (
-    <div className="relative h-full w-56 sm:w-64 large-tablet:w-60 md:w-80 lg:w-[325px] xl:w-96 px-[2.5%] py-[3%] flex flex-col border border-[#DCDCDC] border-solid rounded-lg large-tablet:mx-auto bg-white shadow-sm hover:shadow-lg transition-shadow duration-300">
+    <div className="relative h-full w-56 sm:w-64 large-tablet:w-60 md:w-72 lg:w-64 xl:w-72 2xl:w-80 px-[2.5%] py-[3%] flex flex-col border border-[#DCDCDC] border-solid rounded-lg large-tablet:mx-auto bg-white shadow-sm hover:shadow-lg transition-shadow duration-300">
       <div className="w-full flex-1">
         <div className="overflow-hidden rounded mb-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -29,9 +29,9 @@ export default function PropertyCard({
           />
         </div>
         <div className="w-full flex justify-start mb">
-          <h3 className="font-gilroy text-black text-xl">{title}</h3>
+          <h3 className="font-gilroy text-black text-base xl:text-lg">{title}</h3>
         </div>
-        <p className="text-black text-[10px] md:text-sm mb-4">{description}</p>
+        <p className="text-black text-[10px] md:text-xs xl:text-sm mb-3">{description}</p>
       </div>
       <div className="w-full flex justify-start mt-auto">
         {href ? (

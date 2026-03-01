@@ -60,8 +60,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 610px;
+  width: 480px;
   height: 100%;
+}
+
+@media screen and (min-width: 1536px) {
+  .text_container {
+    width: 560px;
+  }
 }
 
 .company_logo {
@@ -72,12 +78,21 @@
 }
 
 .company_title {
-  font-size: 36px;
+  font-size: 24px;
   color: var(--gold);
   font-weight: 500;
 }
 
 .company_slogan {
-  font-size: 74px;
+  font-size: 48px;
   color: white;
+}
+
+@media screen and (min-width: 1536px) {
+  .company_title {
+    font-size: 30px;
+  }
+  .company_slogan {
+    font-size: 60px;
+  }
 }

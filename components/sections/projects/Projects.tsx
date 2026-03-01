@@ -74,10 +74,10 @@ export default function Projects({ projects = [] }: ProjectsProps) {
 
   return (
     <section className="w-full bg-white py-8" id="projects-section">
-      <div className="w-full max-w-screen-xl mx-auto py-2  2xl:px-0 large-tablet:px-8">
+      <div className="w-full max-w-screen-lg mx-auto py-2  2xl:px-0 large-tablet:px-8">
         <div className="flex justify-between mb-8 px-8 large-tablet:px-0">
           <h2
-            className="text-2xl xl:text-4xl font-bold text-[#1E1E1E] after:content-[''] after:block after:w-16 after:h-1 after:bg-gold after:mt-2"
+            className="text-xl xl:text-2xl 2xl:text-3xl font-bold text-[#1E1E1E] after:content-[''] after:block after:w-12 after:h-[3px] after:bg-gold after:mt-2"
             onClick={() => {
               lightGallery.current?.openGallery();
             }}

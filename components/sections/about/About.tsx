@@ -14,7 +14,7 @@ export default function About({ data }: AboutProps) {
 
   return (
     <section
-      className="w-full flex flex-col-reverse lg:flex-row xl:justify-between py-16 max-w-screen-xl max-h-fit mx-auto gap-y-4 lg:gap-y-0 lg:px-8 2xl:px-0"
+      className="w-full flex flex-col-reverse lg:flex-row xl:justify-between py-10 xl:py-12 max-w-screen-lg max-h-fit mx-auto gap-y-4 lg:gap-y-0 lg:px-8 2xl:px-0"
       id="about-section"
     >
       <div className="w-full lg:w-5/12  relative">
@@ -28,10 +28,10 @@ export default function About({ data }: AboutProps) {
         ></iframe>
       </div>
       <div className="w-full lg:w-7/12 flex flex-col gap-y-4 items-start px-8 lg:px-0 lg:pl-4">
-        <h2 className="text-2xl xl:text-4xl font-bold text-[#1E1E1E] after:content-[''] after:block after:w-16 after:h-1 after:bg-gold after:mt-2">
+        <h2 className="text-xl xl:text-2xl 2xl:text-3xl font-bold text-[#1E1E1E] after:content-[''] after:block after:w-12 after:h-[3px] after:bg-gold after:mt-2">
           {heading}
         </h2>
-        <div className="text-lg text-[#3A3A3A] space-y-4">
+        <div className="text-sm xl:text-base text-[#3A3A3A] space-y-3">
           <p>{bodyText}</p>
           <div>
             <strong>{mission.title}</strong>

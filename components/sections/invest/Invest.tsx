@@ -21,14 +21,14 @@ export default function Invest({ data }: InvestProps) {
 
   return (
     <section
-      className="w-full flex flex-col  items-center justify-center md:flex-row max-w-screen-xl mx-auto py-16 gap-y-12"
+      className="w-full flex flex-col  items-center justify-center md:flex-row max-w-screen-lg mx-auto py-10 xl:py-12 gap-y-8"
       id="invest-section"
     >
       <div className="w-full md:flex-1 pl-8 border-l-4 border-gold">
-        <h2 className="text-2xl xl:text-4xl font-bold text-[#1E1E1E] after:content-[''] after:block after:w-16 after:h-1 after:bg-gold after:mt-2">
+        <h2 className="text-xl xl:text-2xl 2xl:text-3xl font-bold text-[#1E1E1E] after:content-[''] after:block after:w-12 after:h-[3px] after:bg-gold after:mt-2">
           {heading}
         </h2>
-        <div className="text-lg text-[#3A3A3A] flex flex-col gap-y-10 mb-6 pr-2 mt-4">
+        <div className="text-sm xl:text-base text-[#3A3A3A] flex flex-col gap-y-6 mb-4 pr-2 mt-3">
           <p>{paragraph1}</p>
           <p>{paragraph2}</p>
         </div>

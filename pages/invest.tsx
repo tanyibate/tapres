@@ -24,7 +24,7 @@ export default function Invest({ data, projectSlug }: InvestProps) {
     "Start your property investment journey with Tapres. Explore HMO and serviced accommodation opportunities across the UK with strong returns.";
 
   return (
-    <main className="w-full pt-20 h-full flex flex-col">
+    <main className="w-full pt-14 xl:pt-16 h-full flex flex-col">
       <Head>
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
